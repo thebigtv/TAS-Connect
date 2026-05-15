@@ -18,7 +18,7 @@ const CONFIG = {
    * 4. Find your Sheet ID in the URL bar (the long string between /d/ and /edit)
    * 5. Replace YOUR_SHEET_ID below with that ID
    */
-  SHEET_URL: "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:json",
+  SHEET_URL: "https://docs.google.com/spreadsheets/d/1bD2ZlJWzCn6cb8ZCjDUr1v0FdOlLGNVflSugMq1ZDYg/gviz/tq?tqx=out:json",
 
   /**
    * FORM_URL
@@ -29,7 +29,7 @@ const CONFIG = {
    * 2. Click the eye icon (Preview) — copy that URL
    * 3. Paste it below
    */
-  FORM_URL: "https://forms.gle/YOUR_FORM_ID",
+  FORM_URL: "https://docs.google.com/forms/d/1qH4WAe-Ufq4SA8nrNrQPuXtJn6NahDrKXN7-Ws4_2W8/preview",
 
   /**
    * COMMUNITY_NAME
