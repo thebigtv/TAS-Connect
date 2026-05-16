@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAS Connect · Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest:  #1a2e1e;
+      --moss:    #3d5c3a;
+      --sage:    #7ea87a;
+      --cream:   #f5f0e8;
+      --sand:    #e8dfc8;
+      --copper:  #c47c3a;
+      --ember:   #e8622a;
+      --white:   #fdfaf5;
+      --text:    #1a2e1e;
+      --muted:   #6b7b68;
+      --danger:  #c0392b;
+      --success: #27ae60;
+      --radius:  12px;
+      --shadow:  0 4px 24px rgba(26,46,30,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── LOGIN SCREEN ─────────────────────────────────────────── */
+    #loginScreen {
+      min-height: 100vh;
+      background: var(--forest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .login-card .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--cream);
+      margin-bottom: .2rem;
+    }
+    .login-card .brand span { color: var(--copper); }
+
+    .login-card .subtitle {
+      font-size: .75rem;
+      color: rgba(245,240,232,.4);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .login-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--cream);
+      margin-bottom: .5rem;
+    }
+
+    .login-card p {
+      font-size: .83rem;
+      color: rgba(245,240,232,.55);
+      margin-bottom: 1.5rem;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: .8rem 1rem;
+      border: 1.5px solid rgba(255,255,255,.15);
+      border-radius: 9px;
+      background: rgba(255,255,255,.07);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      text-align: center;
+      letter-spacing: .1em;
+      margin-bottom: .75rem;
+    }
+    .login-card input::placeholder { color: rgba(245,240,232,.3); }
+    .login-card input:focus { outline: none; border-color: var(--copper); }
+
+    .login-error {
+      font-size: .8rem;
+      color: #e88a7a;
+      margin-bottom: .75rem;
+      display: none;
+    }
+
+    .btn-login {
+      width: 100%;
+      background: var(--copper);
+      color: white;
+      border: none;
+      padding: .85rem 1.5rem;
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .18s;
+    }
+    .btn-login:hover { background: var(--ember); }
+
+    /* ── ADMIN SHELL ──────────────────────────────────────────── */
+    #adminShell { display: none; }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    .admin-nav {
+      background: var(--forest);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,.25);
+    }
+
+    .admin-nav .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+    }
+    .admin-nav .brand span { color: var(--copper); }
+    .admin-nav .badge {
+      font-size: .72rem;
+      background: rgba(196,124,58,.25);
+      border: 1px solid rgba(196,124,58,.4);
+      color: #f0b878;
+      padding: .2rem .65rem;
+      border-radius: 999px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-left: .6rem;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+    .btn-signout {
+      background: transparent;
+      border: 1px solid rgba(245,240,232,.25);
+      color: rgba(245,240,232,.6);
+      padding: .35rem .9rem;
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .8rem;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .btn-signout:hover { border-color: rgba(245,240,232,.5); color: var(--cream); }
+
+    .btn-viewsite {
+      background: var(--copper);
+      color: white;
+      border: none;
+      padding: .35rem .9rem;
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .8rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+    }
+    .btn-viewsite:hover { background: var(--ember); }
+
+    /* ── LAYOUT ───────────────────────────────────────────────── */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* ── SIDEBAR ──────────────────────────────────────────────── */
+    .sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--sand);
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-section {
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      font-weight: 500;
+      padding: .5rem 1.5rem;
+      margin-top: .5rem;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .65rem 1.5rem;
+      font-size: .88rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .sidebar-item:hover { background: var(--cream); }
+    .sidebar-item.active { background: rgba(196,124,58,.1); color: var(--copper); font-weight: 500; }
+    .sidebar-item .icon { font-size: 1rem; width: 20px; text-align: center; }
+
+    .sidebar-count {
+      margin-left: auto;
+      background: var(--sand);
+      color: var(--muted);
+      font-size: .7rem;
+      padding: .15rem .5rem;
+      border-radius: 999px;
+    }
+    .sidebar-count.red { background: rgba(192,57,43,.15); color: var(--danger); }
+
+    /* ── MAIN CONTENT ─────────────────────────────────────────── */
+    .main {
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--forest);
+      margin-bottom: .3rem;
+    }
+    .page-header p { font-size: .85rem; color: var(--muted); }
+
+    /* ── STAT CARDS ───────────────────────────────────────────── */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .stat-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--forest);
+      display: block;
+    }
+    .stat-card .label { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .stat-card.orange .num { color: var(--copper); }
+    .stat-card.green .num { color: var(--success); }
+    .stat-card.red .num { color: var(--danger); }
+
+    /* ── SETUP GUIDE ──────────────────────────────────────────── */
+    .setup-card {
+      background: linear-gradient(135deg, #fffbf0, #fff5e0);
+      border: 1.5px solid rgba(196,124,58,.3);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .setup-card h3 {
+      font-size: 1rem;
+      color: var(--forest);
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .setup-steps {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+
+    .setup-step {
+      display: flex;
+      gap: .75rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      background: var(--forest);
+      color: white;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700;
+      flex-shrink: 0; margin-top: .1rem;
+    }
+
+    .setup-step p { font-size: .83rem; color: var(--text); line-height: 1.55; }
+    .setup-step code { background: rgba(0,0,0,.07); padding: .1rem .35rem; border-radius: 4px; font-size: .78rem; }
+
+    /* ── TABLES ───────────────────────────────────────────────── */
+    .table-wrap {
+      background: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .table-toolbar {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--sand);
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+
+    .table-toolbar h3 {
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--forest);
+      flex: 1;
+    }
+
+    .toolbar-search {
+      position: relative;
+    }
+    .toolbar-search input {
+      padding: .45rem .75rem .45rem 2rem;
+      border: 1px solid var(--sand);
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      background: var(--cream);
+      width: 200px;
+    }
+    .toolbar-search input:focus { outline: none; border-color: var(--sage); }
+    .toolbar-search .s-icon { position: absolute; left: .6rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: .75rem; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .83rem;
+    }
+
+    thead th {
+      background: var(--cream);
+      padding: .75rem 1rem;
+      text-align: left;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--sand);
+    }
+
+    tbody tr { border-bottom: 1px solid var(--sand); transition: background .12s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--cream); }
+
+    td { padding: .85rem 1rem; vertical-align: middle; }
+
+    .td-name { font-weight: 500; color: var(--forest); }
+    .td-bio { color: var(--muted); max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .td-contact { color: var(--muted); font-size: .78rem; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .2rem .65rem;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 500;
+    }
+    .status-pending  { background: rgba(196,124,58,.12); color: var(--copper); }
+    .status-approved { background: rgba(39,174,96,.12);  color: var(--success); }
+    .status-rejected { background: rgba(192,57,43,.12);  color: var(--danger); }
+
+    .action-btns { display: flex; gap: .4rem; }
+
+    .btn-approve, .btn-reject, .btn-undo {
+      padding: .3rem .7rem;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .75rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all .15s;
+    }
+    .btn-approve { background: rgba(39,174,96,.15); color: var(--success); }
+    .btn-approve:hover { background: rgba(39,174,96,.3); }
+    .btn-reject { background: rgba(192,57,43,.12); color: var(--danger); }
+    .btn-reject:hover { background: rgba(192,57,43,.25); }
+    .btn-undo { background: var(--sand); color: var(--muted); }
+    .btn-undo:hover { background: var(--cream); }
+
+    /* ── SETTINGS PAGE ────────────────────────────────────────── */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .settings-card {
+      background: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .settings-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: .3rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .settings-card p {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.55;
+    }
+
+    .field-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .field-group label { font-size: .78rem; font-weight: 500; color: var(--text); }
+
+    .field-group input {
+      padding: .65rem .9rem;
+      border: 1.5px solid var(--sand);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      background: var(--cream);
+      color: var(--text);
+    }
+    .field-group input:focus { outline: none; border-color: var(--sage); }
+
+    .field-hint { font-size: .74rem; color: var(--muted); }
+
+    .btn-save {
+      background: var(--forest);
+      color: white;
+      border: none;
+      padding: .65rem 1.25rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .18s;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .btn-save:hover { background: var(--moss); }
+    .btn-save:disabled { opacity: .5; cursor: not-allowed; }
+
+    .save-status {
+      font-size: .8rem;
+      margin-top: .75rem;
+      display: none;
+      align-items: center;
+      gap: .4rem;
+    }
+    .save-status.success { color: var(--success); display: flex; }
+    .save-status.error   { color: var(--danger);  display: flex; }
+
+    /* ── INSTRUCTIONS CARD ────────────────────────────────────── */
+    .info-card {
+      background: var(--cream);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      font-size: .83rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+    .info-card strong { color: var(--forest); }
+    .info-card a { color: var(--copper); }
+
+    /* ── TOAST ────────────────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--forest);
+      color: white;
+      padding: .75rem 1.25rem;
+      border-radius: 10px;
+      font-size: .85rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,.2);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all .25s ease;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { background: var(--success); }
+    #toast.error   { background: var(--danger); }
+
+    /* ── EMPTY STATE ──────────────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+    }
+    .empty-state .ei { font-size: 2.5rem; margin-bottom: .75rem; }
+    .empty-state h3 { font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: .35rem; }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .sidebar { display: flex; overflow-x: auto; padding: .5rem; border-right: none; border-bottom: 1px solid var(--sand); }
+      .sidebar-section { display: none; }
+      .sidebar-item { white-space: nowrap; border-radius: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ──────────────────────────────────────────────── -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="brand">TAS <span>Connect</span></div>
+    <div class="subtitle">Admin Panel</div>
+    <h2>🔐 Admin Access</h2>
+    <p>Enter your admin password to manage the community.</p>
+    <input type="password" id="adminPwInput" placeholder="Admin password" />
+    <div class="login-error" id="adminLoginError">Incorrect password</div>
+    <button class="btn-login" onclick="attemptAdminLogin()">Enter Admin Panel</button>
+  </div>
+</div>
+
+<!-- ── ADMIN SHELL ────────────────────────────────────────────────── -->
+<div id="adminShell">
+
+  <!-- NAV -->
+  <div class="admin-nav">
+    <div>
+      <span class="brand">TAS <span>Connect</span></span>
+      <span class="badge">Admin</span>
+    </div>
+    <div class="nav-right">
+      <a href="/" class="btn-viewsite" target="_blank">🌿 View Site</a>
+      <button class="btn-signout" onclick="signOut()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-section">Dashboard</div>
+      <button class="sidebar-item active" onclick="showPage('dashboard', this)">
+        <span class="icon">📊</span> Overview
+      </button>
+
+      <div class="sidebar-section">Members</div>
+      <button class="sidebar-item" onclick="showPage('pending', this)">
+        <span class="icon">⏳</span> Pending Approval
+        <span class="sidebar-count red" id="pendingCount">0</span>
+      </button>
+      <button class="sidebar-item" onclick="showPage('approved', this)">
+        <span class="icon">✅</span> Approved
+        <span class="sidebar-count" id="approvedCount">0</span>
+      </button>
+      <button class="sidebar-item" onclick="showPage('all', this)">
+        <span class="icon">👥</span> All Profiles
+        <span class="sidebar-count" id="allCount">0</span>
+      </button>
+
+      <div class="sidebar-section">Admin</div>
+      <button class="sidebar-item" onclick="showPage('settings', this)">
+        <span class="icon">⚙️</span> Settings
+      </button>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-header">
+          <h1>Welcome back 👋</h1>
+          <p>Here's what's happening in your community.</p>
+        </div>
+
+        <div class="stat-cards">
+          <div class="stat-card">
+            <span class="num" id="dash-total">—</span>
+            <span class="label">Total Profiles</span>
+          </div>
+          <div class="stat-card orange">
+            <span class="num" id="dash-pending">—</span>
+            <span class="label">Awaiting Approval</span>
+          </div>
+          <div class="stat-card green">
+            <span class="num" id="dash-approved">—</span>
+            <span class="label">Live on Site</span>
+          </div>
+          <div class="stat-card">
+            <span class="num" id="dash-locations">—</span>
+            <span class="label">Locations</span>
+          </div>
+        </div>
+
+        <div class="setup-card" id="sheetSetupGuide">
+          <h3>📋 One-time Google Sheet setup required</h3>
+          <p style="font-size:.83rem; color:var(--muted); margin-top:.3rem;">To enable profile approvals and password management from this panel, add an <strong>Approved</strong> column and a <strong>Settings</strong> tab to your Google Sheet.</p>
+          <div class="setup-steps">
+            <div class="setup-step">
+              <div class="step-num">1</div>
+              <p>Open your <strong>TAS Connect Members</strong> Google Sheet. In the first row of the responses tab, add a new column header: <code>Approved</code> — type it exactly like that.</p>
+            </div>
+            <div class="setup-step">
+              <div class="step-num">2</div>
+              <p>For each existing member row, type <code>yes</code> in the Approved column to make them live, or leave blank to keep them hidden.</p>
+            </div>
+            <div class="setup-step">
+              <div class="step-num">3</div>
+              <p>Add a second sheet tab — click the <strong>+</strong> at the bottom of the sheet and name it exactly <code>Settings</code>.</p>
+            </div>
+            <div class="setup-step">
+              <div class="step-num">4</div>
+              <p>In the Settings tab, put <code>Key</code> in cell A1 and <code>Value</code> in cell B1. Then in A2 put <code>member_password</code> and in B2 put your chosen member password.</p>
+            </div>
+            <div class="setup-step">
+              <div class="step-num">5</div>
+              <p>Update <code>config.js</code> — add your Settings tab Sheet URL as <code>SETTINGS_URL</code>. The format is the same as your main sheet URL but with <code>&sheet=Settings</code> added to the end.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card" id="pendingAlert" style="display:none;">
+          ⏳ You have <strong id="pendingAlertNum">0</strong> profiles waiting for approval. <button onclick="showPage('pending', document.querySelector('.sidebar-item:nth-child(4)'))" style="background:none;border:none;color:var(--copper);cursor:pointer;font-weight:500;">Review now →</button>
+        </div>
+      </div>
+
+      <!-- PENDING -->
+      <div class="page" id="page-pending">
+        <div class="page-header">
+          <h1>Pending Approval</h1>
+          <p>New profiles waiting for your review before going live on the site.</p>
+        </div>
+        <div class="table-wrap">
+          <div class="table-toolbar">
+            <h3>New submissions</h3>
+            <div class="toolbar-search">
+              <span class="s-icon">🔍</span>
+              <input type="text" placeholder="Search…" oninput="filterTable('pendingTable', this.value)" />
+            </div>
+          </div>
+          <table id="pendingTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Occupation</th>
+                <th>Bio</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pendingBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- APPROVED -->
+      <div class="page" id="page-approved">
+        <div class="page-header">
+          <h1>Approved Members</h1>
+          <p>Profiles currently live on the public site.</p>
+        </div>
+        <div class="table-wrap">
+          <div class="table-toolbar">
+            <h3>Live profiles</h3>
+            <div class="toolbar-search">
+              <span class="s-icon">🔍</span>
+              <input type="text" placeholder="Search…" oninput="filterTable('approvedTable', this.value)" />
+            </div>
+          </div>
+          <table id="approvedTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Occupation</th>
+                <th>Activities</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="approvedBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ALL -->
+      <div class="page" id="page-all">
+        <div class="page-header">
+          <h1>All Profiles</h1>
+          <p>Every submission regardless of status.</p>
+        </div>
+        <div class="table-wrap">
+          <div class="table-toolbar">
+            <h3>All submissions</h3>
+            <div class="toolbar-search">
+              <span class="s-icon">🔍</span>
+              <input type="text" placeholder="Search…" oninput="filterTable('allTable', this.value)" />
+            </div>
+          </div>
+          <table id="allTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Occupation</th>
+                <th>Status</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="allBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="page" id="page-settings">
+        <div class="page-header">
+          <h1>Settings</h1>
+          <p>Manage access and community configuration.</p>
+        </div>
+
+        <div class="settings-grid">
+
+          <!-- Member Password -->
+          <div class="settings-card">
+            <h3>🔑 Member Password</h3>
+            <p>This is the password you share with community members so they can unlock contact details on the site. Change it whenever you like — it updates immediately.</p>
+            <div class="field-group">
+              <label>Current member password</label>
+              <input type="text" id="currentPwDisplay" readonly style="opacity:.6;" />
+            </div>
+            <div class="field-group">
+              <label>New member password</label>
+              <input type="text" id="newMemberPw" placeholder="e.g. TASadventures2024" />
+              <span class="field-hint">Share this in your Facebook group after changing it.</span>
+            </div>
+            <button class="btn-save" onclick="saveMemberPassword()">💾 Save Password</button>
+            <div class="save-status" id="pwSaveStatus"></div>
+            <div class="info-card" style="margin-top:1rem; margin-bottom:0;">
+              <strong>Important:</strong> After saving, you still need to update <code>config.js</code> in GitHub to set <code>SETTINGS_URL</code> — otherwise the site reads the password from config.js only. See the setup guide on the dashboard.
+            </div>
+          </div>
+
+          <!-- Admin Password -->
+          <div class="settings-card">
+            <h3>🛡️ Admin Password</h3>
+            <p>Your admin panel password is set in <code>config.js</code> in GitHub as <code>ADMIN_PASSWORD</code>. To change it, edit that file and push to GitHub — Netlify will redeploy automatically.</p>
+            <div class="info-card" style="margin-bottom:0;">
+              Current admin password is stored in <strong>config.js</strong> only — it cannot be changed from here for security reasons.
+            </div>
+          </div>
+
+          <!-- Sheet Links -->
+          <div class="settings-card">
+            <h3>📊 Connected Sheet</h3>
+            <p>Your Google Sheet is connected and working. Use these links to manage it directly.</p>
+            <div style="display:flex; flex-direction:column; gap:.6rem;">
+              <a id="sheetDirectLink" href="#" target="_blank" class="btn-save" style="text-decoration:none;">📋 Open Google Sheet</a>
+              <a id="formDirectLink" href="#" target="_blank" class="btn-save" style="text-decoration:none; background:var(--moss);">📝 Open Google Form</a>
+            </div>
+          </div>
+
+          <!-- Approval Tips -->
+          <div class="settings-card">
+            <h3>✅ Approval Tips</h3>
+            <p>Profile approvals work by updating the <strong>Approved</strong> column in your Google Sheet. You can approve/reject from this panel, and it will show you the instructions to update the sheet.</p>
+            <div class="info-card" style="margin-bottom:0;">
+              Since this is a no-backend setup, approvals work by giving you the <strong>row number</strong> to update in the sheet directly. A future upgrade to Supabase would make this fully automatic.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /main -->
+  </div><!-- /layout -->
+</div><!-- /adminShell -->
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="config.js"></script>
+<script>
+  /* ── State ── */
+  let allProfiles  = [];
+  let memberPw     = '';
+
+  /* ── Admin Login ── */
+  function attemptAdminLogin() {
+    const pw      = document.getElementById('adminPwInput').value;
+    const correct = (typeof CONFIG !== 'undefined' && CONFIG.ADMIN_PASSWORD) ? CONFIG.ADMIN_PASSWORD : 'admin123';
+    if (pw === correct) {
+      sessionStorage.setItem('tasAdmin', '1');
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminShell').style.display  = 'block';
+      loadData();
+    } else {
+      document.getElementById('adminLoginError').style.display = 'block';
+      document.getElementById('adminPwInput').value = '';
+      document.getElementById('adminPwInput').focus();
+    }
+  }
+
+  document.getElementById('adminPwInput').addEventListener('keydown', e => { if (e.key === 'Enter') attemptAdminLogin(); });
+
+  function signOut() {
+    sessionStorage.removeItem('tasAdmin');
+    location.reload();
+  }
+
+  if (sessionStorage.getItem('tasAdmin') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminShell').style.display  = 'block';
+    loadData();
+  }
+
+  /* ── Navigation ── */
+  function showPage(name, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+
+  /* ── Load Data ── */
+  async function loadData() {
+    if (typeof CONFIG === 'undefined' || !CONFIG.SHEET_URL || CONFIG.SHEET_URL.includes('YOUR_SHEET_ID')) {
+      showToast('⚠️ No sheet connected — showing demo data', 'error');
+      allProfiles = DEMO_PROFILES;
+      renderAll();
+      return;
+    }
+
+    try {
+      allProfiles = await fetchSheet(CONFIG.SHEET_URL);
+      renderAll();
+    } catch(e) {
+      showToast('Failed to load sheet data', 'error');
+      allProfiles = DEMO_PROFILES;
+      renderAll();
+    }
+
+    // Load settings (member password)
+    if (typeof CONFIG !== 'undefined' && CONFIG.SETTINGS_URL) {
+      try {
+        const res  = await fetch(CONFIG.SETTINGS_URL);
+        const text = await res.text();
+        const json = JSON.parse(text.replace(/^[^\(]+\(/, '').replace(/\);?$/, ''));
+        const rows = json.table.rows;
+        rows.forEach(row => {
+          if (row.c[0] && row.c[0].v === 'member_password') {
+            memberPw = row.c[1] ? row.c[1].v : '';
+          }
+        });
+        document.getElementById('currentPwDisplay').value = memberPw || '(not set in Settings tab)';
+      } catch(e) {
+        document.getElementById('currentPwDisplay').value = CONFIG.MEMBER_PASSWORD || '(set in config.js)';
+      }
+    } else {
+      document.getElementById('currentPwDisplay').value = (CONFIG && CONFIG.MEMBER_PASSWORD) ? CONFIG.MEMBER_PASSWORD : 'adventures';
+    }
+
+    // Wire sheet/form links
+    if (CONFIG.SHEET_URL) {
+      const sheetId = CONFIG.SHEET_URL.match(/\/d\/(.*?)\//);
+      if (sheetId) document.getElementById('sheetDirectLink').href = `https://docs.google.com/spreadsheets/d/${sheetId[1]}/edit`;
+    }
+    if (CONFIG.FORM_URL) {
+      document.getElementById('formDirectLink').href = CONFIG.FORM_URL.replace('/preview', '/edit');
+    }
+  }
+
+  async function fetchSheet(url) {
+    const res  = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.replace(/^[^\(]+\(/, '').replace(/\);?$/, ''));
+    const rows = json.table.rows;
+    const cols = json.table.cols.map(c => c.label.trim());
+
+    return rows.map((row, idx) => {
+      const obj = {};
+      row.c.forEach((cell, i) => { obj[cols[i]] = cell ? (cell.v ?? '') : ''; });
+      return {
+        rowNum:     idx + 2, // +2 because row 1 is header, sheets are 1-indexed
+        name:       obj['Full Name'] || '—',
+        location:   obj['Location / Suburb'] || '',
+        job:        obj['Occupation'] || '',
+        bio:        obj['About Me'] || '',
+        activities: (obj['Activities I love'] || '').split(',').map(s=>s.trim()).filter(Boolean),
+        skills:     (obj['Skills I can offer'] || '').split(',').map(s=>s.trim()).filter(Boolean),
+        photo:      obj['Profile photo URL'] || '',
+        contact:    obj['Contact email or Instagram handle'] || '',
+        approved:   (obj['Approved'] || '').toString().toLowerCase().trim(),
+      };
+    }).filter(m => m.name && m.name !== '—');
+  }
+
+  /* ── Render All Tables ── */
+  function renderAll() {
+    const pending  = allProfiles.filter(m => m.approved !== 'yes' && m.approved !== 'true' && m.approved !== '1');
+    const approved = allProfiles.filter(m => m.approved === 'yes' || m.approved === 'true' || m.approved === '1');
+
+    // Counts
+    document.getElementById('pendingCount').textContent  = pending.length;
+    document.getElementById('approvedCount').textContent = approved.length;
+    document.getElementById('allCount').textContent      = allProfiles.length;
+    document.getElementById('dash-total').textContent    = allProfiles.length;
+    document.getElementById('dash-pending').textContent  = pending.length;
+    document.getElementById('dash-approved').textContent = approved.length;
+    document.getElementById('dash-locations').textContent = new Set(allProfiles.map(m=>m.location).filter(Boolean)).size;
+
+    // Pending alert
+    if (pending.length > 0) {
+      document.getElementById('pendingAlert').style.display = 'block';
+      document.getElementById('pendingAlertNum').textContent = pending.length;
+    }
+
+    // Setup guide — hide if Approved column exists
+    const hasApproved = allProfiles.some(m => m.approved !== undefined);
+    if (hasApproved && allProfiles.length > 0) {
+      document.getElementById('sheetSetupGuide').style.display = 'none';
+    }
+
+    renderTable('pendingBody', pending, 'pending');
+    renderTable('approvedBody', approved, 'approved');
+    renderTable('allBody', allProfiles, 'all');
+  }
+
+  function renderTable(tbodyId, profiles, mode) {
+    const tbody = document.getElementById(tbodyId);
+    if (!profiles.length) {
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="ei">${mode==='pending'?'🎉':'👥'}</div><h3>${mode==='pending'?'No pending profiles':'No profiles yet'}</h3><p>${mode==='pending'?'All caught up!':'Profiles will appear here once members join.'}</p></div></td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = profiles.map(m => {
+      const statusBadge = m.approved === 'yes' || m.approved === 'true' || m.approved === '1'
+        ? `<span class="status-badge status-approved">✅ Approved</span>`
+        : `<span class="status-badge status-pending">⏳ Pending</span>`;
+
+      const actions = m.approved === 'yes' || m.approved === 'true' || m.approved === '1'
+        ? `<div class="action-btns"><button class="btn-reject" onclick="rejectProfile(${m.rowNum}, '${escHtml(m.name)}')">Reject</button></div>`
+        : `<div class="action-btns"><button class="btn-approve" onclick="approveProfile(${m.rowNum}, '${escHtml(m.name)}')">Approve</button><button class="btn-reject" onclick="rejectProfile(${m.rowNum}, '${escHtml(m.name)}')">Reject</button></div>`;
+
+      const activities = m.activities.slice(0,3).join(', ') || '—';
+
+      return `<tr>
+        <td class="td-name">${escHtml(m.name)}</td>
+        <td>${escHtml(m.location) || '—'}</td>
+        <td>${escHtml(m.job) || '—'}</td>
+        <td class="td-bio">${mode==='approved' ? activities : escHtml(m.bio) || '—'}</td>
+        ${mode==='all' ? `<td>${statusBadge}</td>` : ''}
+        <td class="td-contact">${escHtml(m.contact) || '—'}</td>
+        <td>${actions}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  /* ── Approve / Reject ── */
+  function approveProfile(rowNum, name) {
+    showApprovalInstructions(rowNum, name, 'yes');
+  }
+
+  function rejectProfile(rowNum, name) {
+    showApprovalInstructions(rowNum, name, '');
+  }
+
+  function showApprovalInstructions(rowNum, name, value) {
+    const action = value === 'yes' ? 'approve' : 'remove';
+    const msg = value === 'yes'
+      ? `To approve <strong>${name}</strong>:\n\nIn your Google Sheet, go to row <strong>${rowNum}</strong> and type <strong>yes</strong> in the <strong>Approved</strong> column.\n\nThen refresh this page.`
+      : `To remove <strong>${name}</strong>:\n\nIn your Google Sheet, go to row <strong>${rowNum}</strong> and clear the <strong>Approved</strong> column (delete the value).\n\nThen refresh this page.`;
+
+    // Create a nice modal
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:1rem;';
+
+    overlay.innerHTML = `
+      <div style="background:white;border-radius:16px;padding:2rem;max-width:420px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.3);">
+        <div style="font-size:2rem;margin-bottom:.75rem;">${value==='yes'?'✅':'🗑️'}</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#1a2e1e;margin-bottom:.75rem;">${value==='yes'?'Approve':'Remove'} profile</h3>
+        <p style="font-size:.85rem;color:#6b7b68;line-height:1.65;margin-bottom:1rem;">
+          To ${action} <strong style="color:#1a2e1e;">${name}</strong>, open your Google Sheet and go to <strong>row ${rowNum}</strong>.
+          ${value==='yes'
+            ? 'In the <strong>Approved</strong> column, type <strong>yes</strong>.'
+            : 'Clear the value in the <strong>Approved</strong> column.'
+          }
+          Then refresh this admin panel.
+        </p>
+        <div style="background:#f5f0e8;border-radius:8px;padding:.75rem 1rem;font-size:.82rem;color:#6b7b68;margin-bottom:1.25rem;">
+          💡 <strong>Tip:</strong> Open the sheet in another tab so you can come straight back here.
+        </div>
+        <div style="display:flex;gap:.75rem;">
+          <a href="${getSheetUrl()}" target="_blank" style="flex:1;background:#1a2e1e;color:white;border:none;padding:.65rem 1rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:.4rem;">📋 Open Sheet</a>
+          <button onclick="this.closest('div[style]').remove()" style="flex:1;background:#e8dfc8;color:#1a2e1e;border:none;padding:.65rem 1rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;">Done</button>
+        </div>
+      </div>`;
+
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  }
+
+  function getSheetUrl() {
+    if (typeof CONFIG !== 'undefined' && CONFIG.SHEET_URL) {
+      const match = CONFIG.SHEET_URL.match(/\/d\/(.*?)\//);
+      if (match) return `https://docs.google.com/spreadsheets/d/${match[1]}/edit`;
+    }
+    return '#';
+  }
+
+  /* ── Member Password ── */
+  function saveMemberPassword() {
+    const newPw = document.getElementById('newMemberPw').value.trim();
+    if (!newPw) { showToast('Please enter a password', 'error'); return; }
+
+    // Since we can't write to Google Sheets via JS directly, show instructions
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:1rem;';
+    overlay.innerHTML = `
+      <div style="background:white;border-radius:16px;padding:2rem;max-width:440px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.3);">
+        <div style="font-size:2rem;margin-bottom:.75rem;">🔑</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#1a2e1e;margin-bottom:.75rem;">Update member password</h3>
+        <p style="font-size:.85rem;color:#6b7b68;margin-bottom:1rem;line-height:1.6;">To set the new password to <strong style="color:#1a2e1e;">${escHtml(newPw)}</strong>, do one of the following:</p>
+
+        <div style="background:#f5f0e8;border-radius:8px;padding:1rem;margin-bottom:.75rem;font-size:.83rem;color:#1a2e1e;">
+          <strong>Option A — Google Sheet (recommended)</strong><br>
+          Open your Settings tab → find the <code>member_password</code> row → update cell B2 to <strong>${escHtml(newPw)}</strong>.
+          The site will use it automatically.
+        </div>
+
+        <div style="background:#f5f0e8;border-radius:8px;padding:1rem;margin-bottom:1.25rem;font-size:.83rem;color:#1a2e1e;">
+          <strong>Option B — config.js</strong><br>
+          Update <code>MEMBER_PASSWORD: "${escHtml(newPw)}"</code> in GitHub and push. Netlify redeploys in ~1 min.
+        </div>
+
+        <div style="display:flex;gap:.75rem;">
+          <a href="${getSheetUrl()}" target="_blank" style="flex:1;background:#1a2e1e;color:white;border:none;padding:.65rem 1rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;">📋 Open Sheet</a>
+          <button onclick="this.closest('div[style]').remove()" style="flex:1;background:#e8dfc8;color:#1a2e1e;border:none;padding:.65rem 1rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;">Got it</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  }
+
+  /* ── Table Filter ── */
+  function filterTable(tableId, query) {
+    const q    = query.toLowerCase();
+    const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  /* ── Toast ── */
+  function showToast(msg, type='success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `show ${type}`;
+    setTimeout(() => { t.className = ''; }, 3000);
+  }
+
+  /* ── Helpers ── */
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* ── Demo Data ── */
+  const DEMO_PROFILES = [
+    { rowNum:2, name:"Sam Rivera",     location:"Manly, NSW",           job:"Carpenter",       bio:"Love the outdoors.", activities:["Kayaking","Hiking"], skills:["Carpentry"], photo:"", contact:"@sam_adventures", approved:"yes" },
+    { rowNum:3, name:"Jordan Lee",     location:"Bondi, NSW",           job:"Yoga Instructor", bio:"Sunrise paddleboard sessions.", activities:["Paddleboarding","Yoga"], skills:[], photo:"", contact:"@jordanleeyoga", approved:"" },
+    { rowNum:4, name:"Alex Chen",      location:"North Shore, NSW",     job:"Electrician",     bio:"Rock climbing weekends.", activities:["Rock Climbing"], skills:["Electrical"], photo:"", contact:"alex@email.com", approved:"yes" },
+    { rowNum:5, name:"Taylor Morris",  location:"Cronulla, NSW",        job:"Marine Biologist",bio:"Ocean everything.", activities:["Diving","Sailing"], skills:["Landscaping"], photo:"", contact:"@taylormorris_ocean", approved:"" },
+  ];
+</script>
+</body>
+</html>
