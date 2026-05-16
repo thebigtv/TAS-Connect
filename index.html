@@ -7,21 +7,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    /* ── TOKENS ───────────────────────────────────────────────── */
     :root {
-      --forest:   #1a2e1e;
-      --moss:     #3d5c3a;
-      --sage:     #7ea87a;
-      --cream:    #f5f0e8;
-      --sand:     #e8dfc8;
-      --copper:   #c47c3a;
-      --ember:    #e8622a;
-      --white:    #fdfaf5;
-      --text:     #1a2e1e;
-      --muted:    #6b7b68;
-      --card-bg:  #ffffff;
-      --radius:   14px;
-      --shadow:   0 4px 24px rgba(26,46,30,.10);
+      --forest:  #1a2e1e;
+      --moss:    #3d5c3a;
+      --sage:    #7ea87a;
+      --cream:   #f5f0e8;
+      --sand:    #e8dfc8;
+      --copper:  #c47c3a;
+      --ember:   #e8622a;
+      --white:   #fdfaf5;
+      --text:    #1a2e1e;
+      --muted:   #6b7b68;
+      --radius:  14px;
+      --shadow:  0 4px 24px rgba(26,46,30,.10);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,682 +31,451 @@
       min-height: 100vh;
     }
 
-    /* ── NAV ──────────────────────────────────────────────────── */
-    nav {
+    /* ── AGE GATE ─────────────────────────────────────────────── */
+    #ageGate {
+      position: fixed;
+      inset: 0;
       background: var(--forest);
-      padding: 0 2rem;
+      z-index: 9999;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 20px rgba(0,0,0,.3);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      text-decoration: none;
-    }
-
-    .nav-logo .leaf { font-size: 1.5rem; }
-
-    .nav-logo .brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: var(--cream);
-      letter-spacing: .02em;
-    }
-
-    .nav-logo .brand span { color: var(--copper); }
-
-    nav .nav-actions {
-      display: flex;
-      gap: .75rem;
-      align-items: center;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .4rem;
-      padding: .5rem 1.2rem;
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .875rem;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      transition: all .18s ease;
-      text-decoration: none;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid rgba(245,240,232,.35);
-      color: var(--cream);
-    }
-    .btn-outline:hover { background: rgba(245,240,232,.1); }
-
-    .btn-copper {
-      background: var(--copper);
-      color: white;
-    }
-    .btn-copper:hover { background: var(--ember); transform: translateY(-1px); }
-
-    /* ── HERO ─────────────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(155deg, var(--forest) 0%, var(--moss) 55%, #2d4a28 100%);
-      padding: 5rem 2rem 4rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      opacity: 1;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(196,124,58,.25);
-      border: 1px solid rgba(196,124,58,.5);
-      color: #f0b878;
-      font-size: .75rem;
-      font-weight: 500;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      padding: .35rem .9rem;
-      border-radius: 999px;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      color: var(--white);
-      line-height: 1.15;
-      margin-bottom: 1rem;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: #f0b878;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: rgba(245,240,232,.75);
-      max-width: 520px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.65;
-      font-weight: 300;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
       justify-content: center;
-      flex-wrap: wrap;
+      padding: 2rem;
     }
 
-    .btn-lg {
-      padding: .75rem 1.8rem;
-      font-size: 1rem;
-    }
-
-    /* ── STATS BAR ────────────────────────────────────────────── */
-    .stats-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--sand);
-      display: flex;
-      justify-content: center;
-      gap: 0;
-    }
-
-    .stat {
-      padding: 1.1rem 2.5rem;
-      text-align: center;
-      border-right: 1px solid var(--sand);
-    }
-    .stat:last-child { border-right: none; }
-
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      color: var(--forest);
-      display: block;
-    }
-
-    .stat-label {
-      font-size: .75rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-weight: 500;
-    }
-
-    /* ── SEARCH / FILTER ──────────────────────────────────────── */
-    .search-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--sand);
-      padding: 1.25rem 2rem;
-      display: flex;
-      gap: .75rem;
-      align-items: center;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 64px;
-      z-index: 90;
-    }
-
-    .search-wrap {
-      position: relative;
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .search-wrap .icon {
-      position: absolute;
-      left: .9rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events: none;
-    }
-
-    .search-wrap input {
+    .age-gate-box {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      max-width: 420px;
       width: 100%;
-      padding: .65rem 1rem .65rem 2.5rem;
-      border: 1.5px solid var(--sand);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .9rem;
-      background: var(--cream);
-      color: var(--text);
-      transition: border-color .15s;
+      text-align: center;
     }
 
-    .search-wrap input:focus {
-      outline: none;
-      border-color: var(--sage);
-    }
-
-    select {
-      padding: .65rem 1rem;
-      border: 1.5px solid var(--sand);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .9rem;
-      background: var(--cream);
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    select:focus { outline: none; border-color: var(--sage); }
-
-    /* ── GRID ─────────────────────────────────────────────────── */
-    .grid-wrap {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 2.5rem 2rem 4rem;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-head h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: var(--forest);
-    }
-
-    .count-tag {
-      font-size: .8rem;
-      color: var(--muted);
-      background: var(--sand);
-      padding: .25rem .7rem;
-      border-radius: 999px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    /* ── PROFILE CARD ─────────────────────────────────────────── */
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: transform .2s ease, box-shadow .2s ease;
-      border: 1px solid rgba(0,0,0,.05);
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(26,46,30,.16);
-    }
-
-    .card-header {
-      position: relative;
-      height: 160px;
-      background: linear-gradient(135deg, var(--moss), var(--forest));
-      overflow: hidden;
-    }
-
-    .card-header-pattern {
-      position: absolute;
-      inset: 0;
-      opacity: .15;
-      background-image: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 10px,
-        rgba(255,255,255,.3) 10px,
-        rgba(255,255,255,.3) 11px
-      );
-    }
-
-    .card-header .location-badge {
-      position: absolute;
-      top: .8rem;
-      right: .8rem;
-      background: rgba(255,255,255,.15);
-      backdrop-filter: blur(6px);
-      color: white;
-      font-size: .7rem;
-      font-weight: 500;
-      padding: .25rem .65rem;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      gap: .3rem;
-    }
-
-    .card-avatar {
-      position: absolute;
-      bottom: 5px;
-      left: 1.25rem;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 3px solid white;
-      object-fit: cover;
-      background: var(--sand);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .age-gate-box .logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
-      color: var(--moss);
-      box-shadow: 0 4px 12px rgba(0,0,0,.15);
-      overflow: hidden;
+      color: var(--cream);
+      margin-bottom: .3rem;
+    }
+    .age-gate-box .logo span { color: var(--copper); }
+
+    .age-gate-box .tagline {
+      font-size: .8rem;
+      color: rgba(245,240,232,.5);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
     }
 
-    .card-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .card-body {
-      padding: 3rem 1.25rem 1.25rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-name {
+    .age-gate-box h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      color: var(--forest);
-      margin-bottom: .15rem;
+      font-size: 1.4rem;
+      color: var(--cream);
+      margin-bottom: .75rem;
     }
 
-    .card-job {
-      font-size: .8rem;
-      color: var(--copper);
+    .age-gate-box p {
+      font-size: .85rem;
+      color: rgba(245,240,232,.6);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+    .age-gate-box p strong { color: rgba(245,240,232,.85); }
+
+    .age-gate-actions { display: flex; gap: .75rem; flex-direction: column; }
+
+    .btn-enter {
+      background: var(--copper);
+      color: white;
+      border: none;
+      padding: .9rem 1.5rem;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
       font-weight: 500;
-      margin-bottom: .6rem;
+      cursor: pointer;
+      transition: background .18s;
+    }
+    .btn-enter:hover { background: var(--ember); }
+
+    .btn-leave {
+      background: transparent;
+      color: rgba(245,240,232,.45);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem;
+      cursor: pointer;
+      padding: .5rem;
+    }
+    .btn-leave:hover { color: rgba(245,240,232,.7); }
+
+    .age-disclaimer {
+      margin-top: 1.5rem;
+      font-size: .72rem;
+      color: rgba(245,240,232,.3);
+      line-height: 1.5;
     }
 
-    .card-bio {
-      font-size: .83rem;
-      color: var(--muted);
-      line-height: 1.55;
-      flex: 1;
-      margin-bottom: 1rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .4rem;
-      margin-bottom: 1rem;
-    }
-
-    .tag {
-      background: var(--cream);
-      border: 1px solid var(--sand);
-      color: var(--moss);
-      font-size: .7rem;
-      font-weight: 500;
-      padding: .2rem .6rem;
-      border-radius: 999px;
-    }
-
-    .card-footer {
-      border-top: 1px solid var(--sand);
-      padding: .9rem 1.25rem;
-      display: flex;
-      gap: .6rem;
-    }
-
-    .btn-sm {
-      padding: .4rem .9rem;
-      font-size: .8rem;
-      border-radius: 7px;
-      flex: 1;
-      justify-content: center;
-    }
-
-    .btn-sage {
-      background: rgba(126,168,122,.15);
-      color: var(--moss);
-      border: 1px solid rgba(126,168,122,.3);
-    }
-    .btn-sage:hover { background: rgba(126,168,122,.28); }
-
-    /* ── EMPTY STATE ──────────────────────────────────────────── */
-    .empty {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: var(--muted);
-      grid-column: 1/-1;
-    }
-
-    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .empty h3 { font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: .5rem; }
-
-    /* ── MODAL ────────────────────────────────────────────────── */
-    .modal-overlay {
+    /* ── MEMBER LOGIN MODAL ───────────────────────────────────── */
+    #loginModal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(10,20,10,.6);
-      backdrop-filter: blur(4px);
-      z-index: 200;
+      background: rgba(10,20,10,.7);
+      backdrop-filter: blur(6px);
+      z-index: 500;
       align-items: center;
       justify-content: center;
       padding: 1rem;
     }
+    #loginModal.open { display: flex; }
 
-    .modal-overlay.open { display: flex; }
-
-    .modal {
+    .login-box {
       background: var(--white);
       border-radius: 18px;
-      max-width: 500px;
+      padding: 2.5rem;
+      max-width: 380px;
       width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
       box-shadow: 0 24px 80px rgba(0,0,0,.3);
       animation: slideUp .25s ease;
+      text-align: center;
     }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .modal-hero {
-      height: 160px;
-      background: linear-gradient(135deg, var(--moss), var(--forest));
-      position: relative;
-      border-radius: 18px 18px 0 0;
-      overflow: hidden;
-    }
-
-    .modal-hero-pattern {
-      position: absolute;
-      inset: 0;
-      opacity: .12;
-      background-image: repeating-linear-gradient(
-        45deg, transparent, transparent 10px,
-        rgba(255,255,255,.3) 10px, rgba(255,255,255,.3) 11px
-      );
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(255,255,255,.2);
-      border: none;
-      color: white;
-      width: 32px;
-      height: 32px;
+    .login-box .lock-icon {
+      width: 52px; height: 52px;
+      background: rgba(196,124,58,.12);
       border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background .15s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin: 0 auto 1.25rem;
     }
-    .modal-close:hover { background: rgba(255,255,255,.35); }
 
-    .modal-avatar {
-      position: absolute;
-      bottom: 4px;
-      left: 1.5rem;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 4px solid white;
-      background: var(--sand);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .login-box h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: var(--moss);
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+      font-size: 1.3rem;
+      color: var(--forest);
+      margin-bottom: .4rem;
     }
 
+    .login-box p {
+      font-size: .83rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.55;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1.5px solid var(--sand);
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      background: var(--cream);
+      color: var(--text);
+      margin-bottom: .75rem;
+      text-align: center;
+      letter-spacing: .1em;
+    }
+    .login-box input:focus { outline: none; border-color: var(--sage); }
+
+    .login-error { font-size: .8rem; color: var(--ember); margin-bottom: .75rem; display: none; }
+
+    .login-actions { display: flex; flex-direction: column; gap: .6rem; }
+
+    .btn-login {
+      background: var(--forest); color: white; border: none;
+      padding: .75rem 1.5rem; border-radius: 9px;
+      font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500;
+      cursor: pointer; transition: background .18s;
+    }
+    .btn-login:hover { background: var(--moss); }
+
+    .btn-cancel-login {
+      background: transparent; border: none; color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-size: .85rem;
+      cursor: pointer; padding: .4rem;
+    }
+
+    .login-join-prompt {
+      margin-top: 1.25rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--sand);
+      font-size: .8rem; color: var(--muted);
+    }
+    .login-join-prompt a { color: var(--copper); text-decoration: none; font-weight: 500; }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    nav {
+      background: var(--forest);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 20px rgba(0,0,0,.3);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+    .nav-logo .leaf { font-size: 1.5rem; }
+    .nav-logo .brand { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); letter-spacing: .02em; }
+    .nav-logo .brand span { color: var(--copper); }
+    nav .nav-actions { display: flex; gap: .75rem; align-items: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .5rem 1.2rem; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 500;
+      cursor: pointer; border: none; transition: all .18s ease; text-decoration: none;
+    }
+    .btn-outline { background: transparent; border: 1.5px solid rgba(245,240,232,.35); color: var(--cream); }
+    .btn-outline:hover { background: rgba(245,240,232,.1); }
+    .btn-copper { background: var(--copper); color: white; }
+    .btn-copper:hover { background: var(--ember); transform: translateY(-1px); }
+
+    .member-badge {
+      display: flex; align-items: center; gap: .5rem;
+      background: rgba(126,168,122,.2); border: 1px solid rgba(126,168,122,.4);
+      color: #a8d4a4; font-size: .8rem; padding: .35rem .9rem; border-radius: 999px;
+    }
+    .member-badge .dot {
+      width: 7px; height: 7px; background: #6dbb68; border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(155deg, var(--forest) 0%, var(--moss) 55%, #2d4a28 100%);
+      padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(196,124,58,.25); border: 1px solid rgba(196,124,58,.5);
+      color: #f0b878; font-size: .75rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1.5rem;
+    }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4rem); color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
+    .hero h1 em { font-style: italic; color: #f0b878; }
+    .hero p { font-size: 1.1rem; color: rgba(245,240,232,.75); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.65; font-weight: 300; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-lg { padding: .75rem 1.8rem; font-size: 1rem; }
+
+    /* ── STATS ────────────────────────────────────────────────── */
+    .stats-bar { background: var(--white); border-bottom: 1px solid var(--sand); display: flex; justify-content: center; }
+    .stat { padding: 1.1rem 2.5rem; text-align: center; border-right: 1px solid var(--sand); }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--forest); display: block; }
+    .stat-label { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 500; }
+
+    /* ── MEMBER CTA BANNER ────────────────────────────────────── */
+    .member-cta {
+      background: linear-gradient(135deg, var(--forest), var(--moss));
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .member-cta p { color: rgba(245,240,232,.8); font-size: .9rem; }
+    .member-cta p strong { color: var(--cream); }
+
+    /* ── SEARCH ───────────────────────────────────────────────── */
+    .search-bar {
+      background: var(--white); border-bottom: 1px solid var(--sand);
+      padding: 1.25rem 2rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;
+      position: sticky; top: 64px; z-index: 90;
+    }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-wrap .icon { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .search-wrap input {
+      width: 100%; padding: .65rem 1rem .65rem 2.5rem;
+      border: 1.5px solid var(--sand); border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      background: var(--cream); color: var(--text); transition: border-color .15s;
+    }
+    .search-wrap input:focus { outline: none; border-color: var(--sage); }
+    select { padding: .65rem 1rem; border: 1.5px solid var(--sand); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .9rem; background: var(--cream); color: var(--text); cursor: pointer; }
+    select:focus { outline: none; border-color: var(--sage); }
+
+    /* ── GRID ─────────────────────────────────────────────────── */
+    .grid-wrap { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; }
+    .section-head h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--forest); }
+    .count-tag { font-size: .8rem; color: var(--muted); background: var(--sand); padding: .25rem .7rem; border-radius: 999px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    /* ── CARD ─────────────────────────────────────────────────── */
+    .card {
+      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+      overflow: hidden; transition: transform .2s ease, box-shadow .2s ease;
+      border: 1px solid rgba(0,0,0,.05); display: flex; flex-direction: column; cursor: pointer;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,46,30,.16); }
+
+    .card-header { position: relative; height: 130px; background: linear-gradient(135deg, var(--moss), var(--forest)); overflow: hidden; }
+    .card-header-pattern { position: absolute; inset: 0; opacity: .15; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.3) 10px, rgba(255,255,255,.3) 11px); }
+    .location-badge { position: absolute; top: .8rem; right: .8rem; background: rgba(255,255,255,.15); backdrop-filter: blur(6px); color: white; font-size: .7rem; font-weight: 500; padding: .25rem .65rem; border-radius: 999px; }
+
+    .card-avatar {
+      position: absolute; bottom: -40px; left: 1.25rem;
+      width: 80px; height: 80px; border-radius: 50%; border: 3px solid white;
+      background: var(--sand); display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--moss);
+      box-shadow: 0 4px 12px rgba(0,0,0,.15); overflow: hidden;
+    }
+    .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .card-body { padding: 3rem 1.25rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .card-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--forest); margin-bottom: .15rem; }
+    .card-job { font-size: .8rem; color: var(--copper); font-weight: 500; margin-bottom: .6rem; }
+    .card-bio { font-size: .83rem; color: var(--muted); line-height: 1.55; flex: 1; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+    .tag { background: var(--cream); border: 1px solid var(--sand); color: var(--moss); font-size: .7rem; font-weight: 500; padding: .2rem .6rem; border-radius: 999px; }
+
+    .card-footer { border-top: 1px solid var(--sand); padding: .9rem 1.25rem; display: flex; gap: .6rem; }
+    .btn-sm { padding: .4rem .9rem; font-size: .8rem; border-radius: 7px; flex: 1; justify-content: center; }
+    .btn-sage { background: rgba(126,168,122,.15); color: var(--moss); border: 1px solid rgba(126,168,122,.3); }
+    .btn-sage:hover { background: rgba(126,168,122,.28); }
+
+    /* ── EMPTY ────────────────────────────────────────────────── */
+    .empty { text-align: center; padding: 4rem 2rem; color: var(--muted); grid-column: 1/-1; }
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty h3 { font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: .5rem; }
+
+    /* ── PROFILE MODAL ────────────────────────────────────────── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,20,10,.6); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--white); border-radius: 18px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,.3); animation: slideUp .25s ease; }
+
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .modal-hero { height: 160px; background: linear-gradient(135deg, var(--moss), var(--forest)); position: relative; border-radius: 18px 18px 0 0; overflow: hidden; }
+    .modal-hero-pattern { position: absolute; inset: 0; opacity: .12; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.3) 10px, rgba(255,255,255,.3) 11px); }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    .modal-close:hover { background: rgba(255,255,255,.35); }
+    .modal-avatar { position: absolute; bottom: -44px; left: 1.5rem; width: 88px; height: 88px; border-radius: 50%; border: 4px solid white; background: var(--sand); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--moss); overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
     .modal-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    .modal-body {
-      padding: 3.5rem 1.5rem 1.5rem;
-    }
-
-    .modal-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--forest);
-    }
-
-    .modal-job {
-      color: var(--copper);
-      font-size: .85rem;
-      font-weight: 500;
-      margin-bottom: .3rem;
-    }
-
-    .modal-location {
-      font-size: .82rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: .3rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .modal-section-label {
-      font-size: .7rem;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: var(--muted);
-      font-weight: 500;
-      margin-bottom: .5rem;
-      margin-top: 1.2rem;
-    }
-
-    .modal-bio {
-      font-size: .9rem;
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: .75rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-
+    .modal-body { padding: 3.5rem 1.5rem 1.5rem; }
+    .modal-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--forest); }
+    .modal-job { color: var(--copper); font-size: .85rem; font-weight: 500; margin-bottom: .3rem; }
+    .modal-location { font-size: .82rem; color: var(--muted); display: flex; align-items: center; gap: .3rem; margin-bottom: 1.2rem; }
+    .modal-section-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 500; margin-bottom: .5rem; margin-top: 1.2rem; }
+    .modal-bio { font-size: .9rem; color: var(--text); line-height: 1.7; }
+    .modal-actions { display: flex; gap: .75rem; margin-top: 1.5rem; flex-wrap: wrap; }
     .modal-actions .btn { flex: 1; justify-content: center; }
 
+    .modal-locked-contact { margin-top: 1.5rem; background: var(--cream); border: 1.5px dashed var(--sand); border-radius: 12px; padding: 1.25rem; text-align: center; }
+    .modal-locked-contact .lock { font-size: 1.5rem; margin-bottom: .5rem; }
+    .modal-locked-contact p { font-size: .83rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+    .modal-locked-contact p strong { color: var(--forest); }
+
     /* ── FOOTER ───────────────────────────────────────────────── */
-    footer {
-      background: var(--forest);
-      color: rgba(245,240,232,.6);
-      text-align: center;
-      padding: 2rem;
-      font-size: .82rem;
-    }
-
+    footer { background: var(--forest); color: rgba(245,240,232,.6); text-align: center; padding: 2rem; font-size: .82rem; line-height: 1.8; }
     footer strong { color: var(--cream); }
+    footer a { color: var(--copper); text-decoration: none; }
 
-    /* ── SETUP BANNER ─────────────────────────────────────────── */
-    .setup-banner {
-      background: linear-gradient(135deg, #fffbf0, #fff5e0);
-      border: 1.5px solid rgba(196,124,58,.3);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 2rem;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    .setup-banner .icon { font-size: 1.4rem; flex-shrink: 0; }
-    .setup-banner h3 { font-size: .95rem; color: var(--forest); font-weight: 500; margin-bottom: .25rem; }
-    .setup-banner p { font-size: .82rem; color: var(--muted); line-height: 1.55; }
-    .setup-banner a { color: var(--copper); }
-
-    /* ── RESPONSIVE ───────────────────────────────────────────── */
     @media (max-width: 600px) {
       .stats-bar { display: none; }
-      .stat { padding: .8rem 1.2rem; }
-      .search-bar { top: 64px; }
+      .member-cta { flex-direction: column; text-align: center; gap: .75rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ── AGE GATE ──────────────────────────────────────────────────── -->
+<div id="ageGate">
+  <div class="age-gate-box">
+    <div class="logo">TAS <span>Connect</span></div>
+    <div class="tagline">Adventure Singles Community</div>
+    <h2>You must be 18+ to enter</h2>
+    <p>TAS Connect is an <strong>adults-only</strong> community platform for Adventure Singles members. It contains mature content and adult themes.</p>
+    <div class="age-gate-actions">
+      <button class="btn-enter" onclick="enterSite()">I am 18 or older — Enter</button>
+      <button class="btn-leave" onclick="window.location='https://google.com'">I am under 18 — Leave</button>
+    </div>
+    <div class="age-disclaimer">By entering you confirm you are 18+ and agree to our community guidelines. This platform is for Adventure Singles members only.</div>
+  </div>
+</div>
+
+<!-- ── MEMBER LOGIN MODAL ────────────────────────────────────────── -->
+<div id="loginModal">
+  <div class="login-box">
+    <div class="lock-icon">🔓</div>
+    <h2>Members Only</h2>
+    <p>Enter the member password to unlock contact details and connect with the community.</p>
+    <input type="password" id="passwordInput" placeholder="Member password" />
+    <div class="login-error" id="loginError">Incorrect password — try again</div>
+    <div class="login-actions">
+      <button class="btn-login" onclick="attemptLogin()">Unlock Access</button>
+      <button class="btn-cancel-login" onclick="closeLogin()">Maybe later</button>
+    </div>
+    <div class="login-join-prompt">Not a member yet? <a href="#" id="loginJoinLink">Join the community →</a></div>
+  </div>
+</div>
+
+<!-- ── NAV ───────────────────────────────────────────────────────── -->
 <nav>
   <a href="#" class="nav-logo">
     <span class="leaf">🌿</span>
     <span class="brand">TAS <span>Connect</span></span>
   </a>
   <div class="nav-actions">
-    <a href="#" class="btn btn-outline" id="openFormBtn">Join the Community</a>
-    <a href="#" class="btn btn-copper" id="addProfileBtn">+ Add My Profile</a>
+    <div id="navMemberBadge" class="member-badge" style="display:none;"><span class="dot"></span> Member access</div>
+    <button class="btn btn-outline" id="navLoginBtn">Member Login</button>
+    <a href="#" class="btn btn-copper" id="navJoinBtn">+ Join Free</a>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ──────────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="hero-badge">🏕️ Adventure Singles Community</div>
+  <div class="hero-badge">🏕️ Adventure Singles · 80,000+ Members</div>
   <h1>Find your <em>adventure</em><br>partner in crime</h1>
-  <p>Meet fellow solo adventurers from your community — hikers, paddlers, climbers, and everyone in between. Connect, collaborate, and get out there.</p>
+  <p>Real people. Real adventures. Browse our community of solo adventurers — hikers, paddlers, climbers, and a whole lot more. Create a profile and connect.</p>
   <div class="hero-actions">
     <a href="#members" class="btn btn-copper btn-lg">Browse Members</a>
     <a href="#" class="btn btn-outline btn-lg" id="heroJoinBtn">Create My Profile</a>
   </div>
 </section>
 
-<!-- STATS -->
+<!-- ── STATS ──────────────────────────────────────────────────────── -->
 <div class="stats-bar">
-  <div class="stat">
-    <span class="stat-num" id="statMembers">—</span>
-    <span class="stat-label">Members</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num" id="statLocations">—</span>
-    <span class="stat-label">Locations</span>
-  </div>
-  <div class="stat">
-    <span class="stat-num" id="statActivities">—</span>
-    <span class="stat-label">Activities</span>
-  </div>
+  <div class="stat"><span class="stat-num" id="statMembers">—</span><span class="stat-label">Profiles</span></div>
+  <div class="stat"><span class="stat-num" id="statLocations">—</span><span class="stat-label">Locations</span></div>
+  <div class="stat"><span class="stat-num" id="statActivities">—</span><span class="stat-label">Activities</span></div>
 </div>
 
-<!-- SEARCH -->
+<!-- ── MEMBER CTA ─────────────────────────────────────────────────── -->
+<div class="member-cta" id="memberCta">
+  <p>👋 <strong>See someone you like?</strong> Log in as a member to unlock contact details and connect directly.</p>
+  <button class="btn btn-copper" onclick="openLogin()">Member Login</button>
+</div>
+
+<!-- ── SEARCH ─────────────────────────────────────────────────────── -->
 <div class="search-bar">
   <div class="search-wrap">
     <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input type="text" id="searchInput" placeholder="Search by name, job, or interest…" />
   </div>
-  <select id="locationFilter">
-    <option value="">All Locations</option>
-  </select>
-  <select id="activityFilter">
-    <option value="">All Activities</option>
-  </select>
+  <select id="locationFilter"><option value="">All Locations</option></select>
+  <select id="activityFilter"><option value="">All Activities</option></select>
 </div>
 
-<!-- MEMBER GRID -->
+<!-- ── GRID ──────────────────────────────────────────────────────── -->
 <div class="grid-wrap" id="members">
   <div class="section-head">
     <h2>Community Members</h2>
     <span class="count-tag" id="countTag">Loading…</span>
   </div>
-
-  <!-- SETUP BANNER (hidden once real data loads) -->
-  <div class="setup-banner" id="setupBanner">
-    <span class="icon">⚙️</span>
-    <div>
-      <h3>Connect your Google Sheet to display real member profiles</h3>
-      <p>
-        Open <strong>config.js</strong> and paste your published Google Sheet JSON URL into <code>SHEET_URL</code>.
-        See the <a href="#setup-guide">setup guide below</a> for step-by-step instructions.
-        Until then, demo profiles are shown.
-      </p>
-    </div>
-  </div>
-
   <div class="grid" id="memberGrid"></div>
 </div>
 
-
-<!-- MODAL -->
+<!-- ── PROFILE MODAL ──────────────────────────────────────────────── -->
 <div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal">
+  <div class="modal">
     <div class="modal-hero">
       <div class="modal-hero-pattern"></div>
       <button class="modal-close" id="modalClose">✕</button>
@@ -720,121 +487,102 @@
       <div class="modal-location" id="modalLocation"></div>
       <div class="modal-section-label">About</div>
       <div class="modal-bio" id="modalBio"></div>
-      <div class="modal-section-label" id="modalTagsLabel">Activities & Interests</div>
+      <div class="modal-section-label">Activities & Interests</div>
       <div class="tags" id="modalTags"></div>
       <div id="modalSkillsSection">
         <div class="modal-section-label">Skills on offer</div>
         <div class="tags" id="modalSkills"></div>
       </div>
-      <div class="modal-actions" id="modalActions"></div>
+      <div id="modalContactArea"></div>
+      <div class="modal-actions">
+        <button class="btn btn-sage" onclick="closeModal()">Close</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
 <footer>
-  <strong>TAS Connect</strong> · Adventure Singles Community &nbsp;·&nbsp; Built with ❤️ for adventurous souls
+  <strong>TAS Connect</strong> · Adventure Singles Community<br>
+  <a href="#" id="footerJoinLink">Create your profile</a> &nbsp;·&nbsp;
+  <a href="#" id="footerLoginLink">Member login</a> &nbsp;·&nbsp;
+  Adults only · 18+ · Members agree to community guidelines
 </footer>
 
-<!-- CONFIG (edit this) -->
 <script src="config.js"></script>
-
-<!-- APP LOGIC -->
 <script>
-  /* ─── Demo data (shown until real sheet is connected) ─── */
-  const DEMO_MEMBERS = [
-    {
-      name: "Sam Rivera",
-      location: "Manly, NSW",
-      job: "Freelance Carpenter",
-      bio: "Love being outdoors whether it's on the water or up a mountain. Can turn my hand to most home reno projects too — decks, fencing, framing, you name it.",
-      activities: ["Kayaking", "Hiking", "Camping"],
-      skills: ["Carpentry", "Decking", "General repairs"],
-      photo: "",
-      contact: "@sam_adventures"
-    },
-    {
-      name: "Jordan Lee",
-      location: "Bondi, NSW",
-      job: "Yoga Instructor",
-      bio: "Sunrise paddleboard sessions are my happy place. Always keen to meet fellow adventurers who appreciate both the mountain and the ocean.",
-      activities: ["Paddleboarding", "Yoga", "Swimming"],
-      skills: ["Yoga instruction", "Wellness coaching"],
-      photo: "",
-      contact: "@jordanleeyoga"
-    },
-    {
-      name: "Alex Chen",
-      location: "North Shore, NSW",
-      job: "Electrician",
-      bio: "Rock climbing on weekends, fixing wiring during the week. If your lights are flickering or your RCD keeps tripping, I'm your person.",
-      activities: ["Rock Climbing", "Hiking", "Bouldering"],
-      skills: ["Electrical", "Solar install", "Switchboard upgrades"],
-      photo: "",
-      contact: "alex@email.com"
-    },
-    {
-      name: "Taylor Morris",
-      location: "Cronulla, NSW",
-      job: "Marine Biologist",
-      bio: "Obsessed with the ocean in every form — diving, sailing, paddling. I also do freelance garden landscaping to fund my next trip.",
-      activities: ["Diving", "Sailing", "Paddleboarding"],
-      skills: ["Landscaping", "Garden design"],
-      photo: "",
-      contact: "@taylormorris_ocean"
-    },
-    {
-      name: "Casey Williams",
-      location: "Blue Mountains, NSW",
-      job: "Personal Trainer",
-      bio: "If there's a trail, I want to run it. Based in the Mountains so I'm perfectly placed for long weekend adventures. Also do home gym setups.",
-      activities: ["Trail Running", "Hiking", "Cycling"],
-      skills: ["Personal training", "Home gym setup"],
-      photo: "",
-      contact: "@casey_trains"
-    },
-    {
-      name: "Morgan Blake",
-      location: "Northern Beaches, NSW",
-      job: "Plumber",
-      bio: "Surf before work, tools after. Passionate about getting outside every chance I get — and keeping everyone's pipes running when I'm not.",
-      activities: ["Surfing", "Camping", "Fishing"],
-      skills: ["Plumbing", "Hot water systems", "Bathroom renos"],
-      photo: "",
-      contact: "@morganblake"
-    },
-  ];
-
-  /* ─── State ─── */
   let allMembers = [];
   let filtered   = [];
+  let isMember   = false;
 
-  /* ─── Boot ─── */
+  /* ── Age Gate ── */
+  function enterSite() {
+    sessionStorage.setItem('ageVerified', '1');
+    document.getElementById('ageGate').style.display = 'none';
+  }
+  if (sessionStorage.getItem('ageVerified')) {
+    document.getElementById('ageGate').style.display = 'none';
+  }
+
+  /* ── Member Login ── */
+  function openLogin() {
+    document.getElementById('loginModal').classList.add('open');
+    setTimeout(() => document.getElementById('passwordInput').focus(), 100);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLogin() {
+    document.getElementById('loginModal').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('passwordInput').value = '';
+  }
+
+  function attemptLogin() {
+    const pw      = document.getElementById('passwordInput').value;
+    const correct = (typeof CONFIG !== 'undefined' && CONFIG.MEMBER_PASSWORD) ? CONFIG.MEMBER_PASSWORD : 'adventures';
+    if (pw === correct) {
+      sessionStorage.setItem('tasMember', '1');
+      isMember = true;
+      closeLogin();
+      onMemberLogin();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordInput').focus();
+    }
+  }
+
+  document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
+
+  function onMemberLogin() {
+    document.getElementById('navLoginBtn').style.display = 'none';
+    document.getElementById('navMemberBadge').style.display = 'flex';
+    document.getElementById('memberCta').style.display = 'none';
+    render();
+  }
+
+  if (sessionStorage.getItem('tasMember') === '1') { isMember = true; }
+
+  /* ── Boot ── */
   async function init() {
-    let useDemo = false;
+    if (isMember) onMemberLogin();
 
     if (typeof CONFIG !== 'undefined' && CONFIG.SHEET_URL && !CONFIG.SHEET_URL.includes('YOUR_SHEET_ID')) {
-      try {
-        allMembers = await fetchSheet(CONFIG.SHEET_URL);
-        document.getElementById('setupBanner').style.display = 'none';
-      } catch (e) {
-        console.warn('Sheet load failed, using demo data', e);
-        useDemo = true;
-      }
+      try { allMembers = await fetchSheet(CONFIG.SHEET_URL); }
+      catch (e) { console.warn('Sheet load failed, using demo data', e); allMembers = DEMO_MEMBERS; }
     } else {
-      useDemo = true;
+      allMembers = DEMO_MEMBERS;
     }
-
-    if (useDemo) allMembers = DEMO_MEMBERS;
 
     buildFilters();
     filtered = [...allMembers];
     render();
     updateStats();
-    wireFormLinks();
+    wireLinks();
   }
 
-  /* ─── Fetch Google Sheet JSON ─── */
+  /* ── Fetch Sheet ── */
   async function fetchSheet(url) {
     const res  = await fetch(url);
     const text = await res.text();
@@ -854,43 +602,40 @@
         skills:     (obj['Skills I can offer'] || '').split(',').map(s=>s.trim()).filter(Boolean),
         photo:      obj['Profile photo URL'] || '',
         contact:    obj['Contact email or Instagram handle'] || '',
+        approved:   (obj['Approved'] || '').toString().toLowerCase(),
       };
-    }).filter(m => m.name && m.name !== '—');
+    })
+    .filter(m => m.name && m.name !== '—')
+    .filter(m => ['yes','true','1',''].includes(m.approved));
   }
 
-  /* ─── Build filter dropdowns ─── */
+  /* ── Demo data ── */
+  const DEMO_MEMBERS = [
+    { name:"Sam Rivera",     location:"Manly, NSW",            job:"Freelance Carpenter", bio:"Love being outdoors whether it's on the water or up a mountain. Can turn my hand to most home reno projects too — decks, fencing, framing, you name it.", activities:["Kayaking","Hiking","Camping"],           skills:["Carpentry","Decking","General repairs"],        photo:"", contact:"@sam_adventures" },
+    { name:"Jordan Lee",     location:"Bondi, NSW",            job:"Yoga Instructor",     bio:"Sunrise paddleboard sessions are my happy place. Always keen to meet fellow adventurers who appreciate both the mountain and the ocean.",                  activities:["Paddleboarding","Yoga","Swimming"],      skills:["Yoga instruction","Wellness coaching"],         photo:"", contact:"@jordanleeyoga" },
+    { name:"Alex Chen",      location:"North Shore, NSW",      job:"Electrician",         bio:"Rock climbing on weekends, fixing wiring during the week. If your lights are flickering or your RCD keeps tripping, I'm your person.",                    activities:["Rock Climbing","Hiking","Bouldering"],   skills:["Electrical","Solar install"],                   photo:"", contact:"alex@email.com" },
+    { name:"Taylor Morris",  location:"Cronulla, NSW",         job:"Marine Biologist",    bio:"Obsessed with the ocean in every form — diving, sailing, paddling. I also do freelance garden landscaping to fund my next trip.",                         activities:["Diving","Sailing","Paddleboarding"],     skills:["Landscaping","Garden design"],                  photo:"", contact:"@taylormorris_ocean" },
+    { name:"Casey Williams", location:"Blue Mountains, NSW",   job:"Personal Trainer",    bio:"If there's a trail, I want to run it. Based in the Mountains so I'm perfectly placed for long weekend adventures. Also do home gym setups.",              activities:["Trail Running","Hiking","Cycling"],      skills:["Personal training","Home gym setup"],           photo:"", contact:"@casey_trains" },
+    { name:"Morgan Blake",   location:"Northern Beaches, NSW", job:"Plumber",             bio:"Surf before work, tools after. Passionate about getting outside every chance I get — and keeping everyone's pipes running when I'm not.",                  activities:["Surfing","Camping","Fishing"],           skills:["Plumbing","Hot water systems","Bathroom renos"],photo:"", contact:"@morganblake" },
+  ];
+
+  /* ── Filters ── */
   function buildFilters() {
-    const locs  = [...new Set(allMembers.map(m => m.location).filter(Boolean))].sort();
-    const acts  = [...new Set(allMembers.flatMap(m => m.activities).filter(Boolean))].sort();
-
+    const locs = [...new Set(allMembers.map(m=>m.location).filter(Boolean))].sort();
+    const acts = [...new Set(allMembers.flatMap(m=>m.activities).filter(Boolean))].sort();
     const locSel = document.getElementById('locationFilter');
-    locs.forEach(l => {
-      const o = document.createElement('option');
-      o.value = l; o.textContent = l;
-      locSel.appendChild(o);
-    });
-
+    locs.forEach(l => { const o=document.createElement('option'); o.value=l; o.textContent=l; locSel.appendChild(o); });
     const actSel = document.getElementById('activityFilter');
-    acts.forEach(a => {
-      const o = document.createElement('option');
-      o.value = a; o.textContent = a;
-      actSel.appendChild(o);
-    });
+    acts.forEach(a => { const o=document.createElement('option'); o.value=a; o.textContent=a; actSel.appendChild(o); });
   }
 
-  /* ─── Filter logic ─── */
   function applyFilters() {
     const q   = document.getElementById('searchInput').value.toLowerCase();
     const loc = document.getElementById('locationFilter').value;
     const act = document.getElementById('activityFilter').value;
-
     filtered = allMembers.filter(m => {
-      const text = [m.name, m.job, m.bio, ...m.activities, ...m.skills].join(' ').toLowerCase();
-      return (
-        (!q   || text.includes(q)) &&
-        (!loc || m.location === loc) &&
-        (!act || m.activities.includes(act))
-      );
+      const text = [m.name,m.job,m.bio,...m.activities,...m.skills].join(' ').toLowerCase();
+      return (!q||text.includes(q)) && (!loc||m.location===loc) && (!act||m.activities.includes(act));
     });
     render();
   }
@@ -899,99 +644,96 @@
   document.getElementById('locationFilter').addEventListener('change', applyFilters);
   document.getElementById('activityFilter').addEventListener('change', applyFilters);
 
-  /* ─── Render grid ─── */
+  /* ── Render ── */
   function render() {
     const grid = document.getElementById('memberGrid');
-    document.getElementById('countTag').textContent = `${filtered.length} member${filtered.length !== 1 ? 's' : ''}`;
-
+    document.getElementById('countTag').textContent = `${filtered.length} member${filtered.length!==1?'s':''}`;
     if (!filtered.length) {
       grid.innerHTML = `<div class="empty"><div class="empty-icon">🏕️</div><h3>No members found</h3><p>Try adjusting your search or filters</p></div>`;
       return;
     }
-
-    grid.innerHTML = filtered.map((m, i) => cardHTML(m, i)).join('');
-    grid.querySelectorAll('.card').forEach((el, i) => {
-      el.addEventListener('click', () => openModal(filtered[i]));
-    });
+    grid.innerHTML = filtered.map(m => cardHTML(m)).join('');
+    grid.querySelectorAll('.card').forEach((el,i) => { el.addEventListener('click', () => openModal(filtered[i])); });
   }
 
-  function initials(name) {
-    return name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-  }
+  function initials(name) { return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
 
   function avatarHTML(m, cls='card-avatar') {
     if (m.photo) return `<div class="${cls}"><img src="${m.photo}" alt="${m.name}" onerror="this.parentElement.textContent='${initials(m.name)}'" /></div>`;
     return `<div class="${cls}">${initials(m.name)}</div>`;
   }
 
-  function cardHTML(m, i) {
-    const tags = m.activities.slice(0,3).map(t => `<span class="tag">⛰️ ${t}</span>`).join('');
+  function cardHTML(m) {
+    const tags = m.activities.slice(0,3).map(t=>`<span class="tag">⛰️ ${t}</span>`).join('');
+    const connectBtn = isMember
+      ? `<button class="btn btn-copper btn-sm">Connect</button>`
+      : `<button class="btn btn-sage btn-sm" onclick="event.stopPropagation();openLogin()">🔒 Members only</button>`;
     return `
       <div class="card" tabindex="0" role="button" aria-label="View ${m.name}'s profile">
         <div class="card-header">
           <div class="card-header-pattern"></div>
-          ${m.location ? `<div class="location-badge">📍 ${m.location}</div>` : ''}
+          ${m.location?`<div class="location-badge">📍 ${m.location}</div>`:''}
           ${avatarHTML(m)}
         </div>
         <div class="card-body">
           <div class="card-name">${m.name}</div>
           <div class="card-job">${m.job}</div>
-          <div class="card-bio">${m.bio || 'No bio yet.'}</div>
+          <div class="card-bio">${m.bio||'No bio yet.'}</div>
           <div class="tags">${tags}</div>
         </div>
         <div class="card-footer">
           <button class="btn btn-sage btn-sm">View Profile</button>
-          <button class="btn btn-copper btn-sm">Connect</button>
+          ${connectBtn}
         </div>
       </div>`;
   }
 
-  /* ─── Stats ─── */
+  /* ── Stats ── */
   function updateStats() {
-    document.getElementById('statMembers').textContent   = allMembers.length;
-    const locs = new Set(allMembers.map(m=>m.location).filter(Boolean));
-    document.getElementById('statLocations').textContent = locs.size;
-    const acts = new Set(allMembers.flatMap(m=>m.activities).filter(Boolean));
-    document.getElementById('statActivities').textContent = acts.size;
+    document.getElementById('statMembers').textContent    = allMembers.length;
+    document.getElementById('statLocations').textContent  = new Set(allMembers.map(m=>m.location).filter(Boolean)).size;
+    document.getElementById('statActivities').textContent = new Set(allMembers.flatMap(m=>m.activities).filter(Boolean)).size;
   }
 
-  /* ─── Modal ─── */
+  /* ── Modal ── */
   function openModal(m) {
-    document.getElementById('modalName').textContent = m.name;
-    document.getElementById('modalJob').textContent  = m.job;
+    document.getElementById('modalName').textContent   = m.name;
+    document.getElementById('modalJob').textContent    = m.job;
     document.getElementById('modalLocation').innerHTML = m.location ? `📍 ${m.location}` : '';
-    document.getElementById('modalBio').textContent  = m.bio || 'No bio yet.';
+    document.getElementById('modalBio').textContent    = m.bio || 'No bio yet.';
 
     const av = document.getElementById('modalAvatar');
-    if (m.photo) {
-      av.innerHTML = `<img src="${m.photo}" alt="${m.name}" onerror="this.parentElement.textContent='${initials(m.name)}'" />`;
-    } else {
-      av.textContent = initials(m.name);
-    }
+    av.innerHTML = m.photo ? `<img src="${m.photo}" alt="${m.name}" onerror="this.parentElement.textContent='${initials(m.name)}'" />` : initials(m.name);
 
-    const tagsEl = document.getElementById('modalTags');
-    tagsEl.innerHTML = m.activities.map(t=>`<span class="tag">⛰️ ${t}</span>`).join('');
+    document.getElementById('modalTags').innerHTML = m.activities.map(t=>`<span class="tag">⛰️ ${t}</span>`).join('');
 
-    const skillsEl = document.getElementById('modalSkills');
     const skillsSec = document.getElementById('modalSkillsSection');
     if (m.skills && m.skills.length) {
-      skillsEl.innerHTML = m.skills.map(s=>`<span class="tag">🔧 ${s}</span>`).join('');
+      document.getElementById('modalSkills').innerHTML = m.skills.map(s=>`<span class="tag">🔧 ${s}</span>`).join('');
       skillsSec.style.display = '';
-    } else {
-      skillsSec.style.display = 'none';
-    }
+    } else { skillsSec.style.display = 'none'; }
 
-    const actions = document.getElementById('modalActions');
-    const isEmail = m.contact && m.contact.includes('@') && m.contact.includes('.');
-    const isInsta = m.contact && m.contact.startsWith('@');
-    let contactBtn = '';
-    if (isEmail) {
-      contactBtn = `<a href="mailto:${m.contact}" class="btn btn-copper">✉️ Send Email</a>`;
-    } else if (isInsta) {
-      const handle = m.contact.replace('@','');
-      contactBtn = `<a href="https://instagram.com/${handle}" target="_blank" class="btn btn-copper">📸 Instagram</a>`;
+    const contactArea = document.getElementById('modalContactArea');
+    if (isMember && m.contact) {
+      const isEmail = m.contact.includes('@') && m.contact.includes('.');
+      const isInsta = m.contact.startsWith('@');
+      if (isEmail) {
+        contactArea.innerHTML = `<a href="mailto:${m.contact}" class="btn btn-copper" style="margin-top:1rem;width:100%;justify-content:center;">✉️ Send Email</a>`;
+      } else if (isInsta) {
+        const handle = m.contact.replace('@','');
+        contactArea.innerHTML = `<a href="https://instagram.com/${handle}" target="_blank" class="btn btn-copper" style="margin-top:1rem;width:100%;justify-content:center;">📸 View Instagram</a>`;
+      } else {
+        contactArea.innerHTML = `<div style="margin-top:1rem;font-size:.85rem;color:var(--muted);">Contact: ${m.contact}</div>`;
+      }
+    } else {
+      const firstName = m.name.split(' ')[0];
+      contactArea.innerHTML = `
+        <div class="modal-locked-contact">
+          <div class="lock">🔒</div>
+          <p><strong>Members can see contact details</strong><br>Log in with your member password to connect with ${firstName} directly.</p>
+          <button class="btn btn-copper" style="width:100%;justify-content:center;" onclick="closeModal();openLogin()">Member Login</button>
+        </div>`;
     }
-    actions.innerHTML = `<button class="btn btn-sage" onclick="closeModal()">Close</button>${contactBtn}`;
 
     document.getElementById('modalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1003,17 +745,17 @@
   }
 
   document.getElementById('modalClose').addEventListener('click', closeModal);
-  document.getElementById('modalOverlay').addEventListener('click', e => {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  });
+  document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target===document.getElementById('modalOverlay')) closeModal(); });
+  document.getElementById('navLoginBtn').addEventListener('click', e => { e.preventDefault(); openLogin(); });
 
-  /* ─── Form links ─── */
-  function wireFormLinks() {
-    const url = (typeof CONFIG !== 'undefined' && CONFIG.FORM_URL) ? CONFIG.FORM_URL : '#setup-guide';
-    ['openFormBtn','addProfileBtn','heroJoinBtn'].forEach(id => {
+  /* ── Links ── */
+  function wireLinks() {
+    const formUrl = (typeof CONFIG!=='undefined' && CONFIG.FORM_URL && !CONFIG.FORM_URL.includes('YOUR_FORM')) ? CONFIG.FORM_URL : '#';
+    ['heroJoinBtn','navJoinBtn','footerJoinLink','loginJoinLink'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) { el.href = url; el.target = url !== '#setup-guide' ? '_blank' : ''; }
+      if (el) { el.href = formUrl; if (formUrl!=='#') el.target='_blank'; }
     });
+    document.getElementById('footerLoginLink').addEventListener('click', e => { e.preventDefault(); openLogin(); });
   }
 
   init();
