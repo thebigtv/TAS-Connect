@@ -337,6 +337,23 @@
       overflow: hidden;
     }
 
+    .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-scroll::-webkit-scrollbar { height: 6px; }
+    .table-scroll::-webkit-scrollbar-track { background: var(--cream); }
+    .table-scroll::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 3px; }
+    .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--sage); }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: .83rem;
+    }
+
     .table-toolbar {
       padding: 1rem 1.25rem;
       border-bottom: 1px solid var(--sand);
@@ -367,12 +384,6 @@
     }
     .toolbar-search input:focus { outline: none; border-color: var(--sage); }
     .toolbar-search .s-icon { position: absolute; left: .6rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: .75rem; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .83rem;
-    }
 
     thead th {
       background: var(--cream);
@@ -693,6 +704,7 @@
               <input type="text" placeholder="Search…" oninput="filterTable('pendingTable', this.value)" />
             </div>
           </div>
+          <div class="table-scroll">
           <table id="pendingTable">
             <thead>
               <tr>
@@ -706,6 +718,7 @@
             </thead>
             <tbody id="pendingBody"></tbody>
           </table>
+          </div>
         </div>
       </div>
 
@@ -723,6 +736,7 @@
               <input type="text" placeholder="Search…" oninput="filterTable('approvedTable', this.value)" />
             </div>
           </div>
+          <div class="table-scroll">
           <table id="approvedTable">
             <thead>
               <tr>
@@ -736,6 +750,7 @@
             </thead>
             <tbody id="approvedBody"></tbody>
           </table>
+          </div>
         </div>
       </div>
 
@@ -753,6 +768,7 @@
               <input type="text" placeholder="Search…" oninput="filterTable('allTable', this.value)" />
             </div>
           </div>
+          <div class="table-scroll">
           <table id="allTable">
             <thead>
               <tr>
@@ -766,6 +782,7 @@
             </thead>
             <tbody id="allBody"></tbody>
           </table>
+          </div>
         </div>
       </div>
 
