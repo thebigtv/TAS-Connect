@@ -143,6 +143,7 @@
     .card-bio { font-size: .83rem; color: var(--muted); line-height: 1.55; flex: 1; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
     .tag { background: var(--cream); border: 1px solid var(--sand); color: var(--moss); font-size: .7rem; font-weight: 500; padding: .2rem .6rem; border-radius: 999px; }
+    .tag-event { background: rgba(196,124,58,.1); border-color: rgba(196,124,58,.3); color: var(--copper); }
     .card-footer { border-top: 1px solid var(--sand); padding: .9rem 1.25rem; display: flex; gap: .6rem; }
     .btn-sm { padding: .4rem .9rem; font-size: .8rem; border-radius: 7px; flex: 1; justify-content: center; }
     .btn-sage { background: rgba(126,168,122,.15); color: var(--moss); border: 1px solid rgba(126,168,122,.3); }
@@ -356,6 +357,10 @@
         <div class="modal-section-label">Skills on offer</div>
         <div class="tags" id="modalSkills"></div>
       </div>
+      <div id="modalAttendingSection">
+        <div class="modal-section-label">Events they're attending</div>
+        <div class="tags" id="modalAttending"></div>
+      </div>
       <div id="modalContactArea"></div>
       <div class="modal-actions">
         <button class="btn btn-sage" onclick="closeModal()">Close</button>
@@ -456,20 +461,21 @@
         photo:      obj['Profile photo URL'] || '',
         contact:    obj['Contact email or Instagram handle'] || '',
         approved:   (obj['Approved']||'').toString().toLowerCase().trim(),
+        attending:  (obj['Events I am attending']||'').split(',').map(s=>s.trim()).filter(Boolean),
       };
     })
     .filter(m => m.name && m.name !== '—')
-    .filter(m => ['yes','true','1',''].includes(m.approved));
+    .filter(m => ['yes','true','1'].includes(m.approved));
   }
 
   /* ── Demo Members ── */
   const DEMO_MEMBERS = [
-    { name:"Sam Rivera",     location:"Manchester",     job:"Freelance Carpenter", bio:"Love being outdoors whether on the water or up a mountain. Can turn my hand to most home reno projects too — decks, fencing, framing.",  activities:["Kayaking","Hiking","Camping"],           skills:["Carpentry","Decking"],              photo:"", contact:"@sam_adventures" },
-    { name:"Jordan Lee",     location:"London",         job:"Yoga Instructor",     bio:"Sunrise paddleboard sessions are my happy place. Always keen to meet fellow adventurers who appreciate both the mountain and the ocean.", activities:["Paddleboarding","Yoga","Swimming"],      skills:["Yoga instruction"],                 photo:"", contact:"@jordanleeyoga" },
-    { name:"Alex Chen",      location:"Leeds",          job:"Electrician",         bio:"Rock climbing on weekends, fixing wiring during the week. If your lights are flickering or your RCD keeps tripping, I'm your person.",   activities:["Rock Climbing","Hiking","Bouldering"],   skills:["Electrical","Solar install"],        photo:"", contact:"alex@email.com" },
-    { name:"Taylor Morris",  location:"Bristol",        job:"Marine Biologist",    bio:"Obsessed with the ocean in every form — diving, sailing, paddling. I also do freelance garden landscaping to fund my next trip.",        activities:["Diving","Sailing","Paddleboarding"],     skills:["Landscaping","Garden design"],       photo:"", contact:"@taylormorris_ocean" },
-    { name:"Casey Williams", location:"Lake District",  job:"Personal Trainer",    bio:"If there's a trail, I want to run it. Perfectly placed for long weekend adventures in the Lakes. Also do home gym setups.",             activities:["Trail Running","Hiking","Cycling"],      skills:["Personal training","Home gym setup"],photo:"", contact:"@casey_trains" },
-    { name:"Morgan Blake",   location:"Brighton",       job:"Plumber",             bio:"Surf before work, tools after. Passionate about getting outside every chance — and keeping everyone's pipes running when I'm not.",      activities:["Surfing","Camping","Fishing"],           skills:["Plumbing","Bathroom renos"],         photo:"", contact:"@morganblake" },
+    { name:"Sam Rivera",     location:"Manchester",     job:"Freelance Carpenter", bio:"Love being outdoors whether on the water or up a mountain. Can turn my hand to most home reno projects too — decks, fencing, framing.",  activities:["Kayaking","Hiking","Camping"],           skills:["Carpentry","Decking"],              photo:"", contact:"@sam_adventures",      attending:["TAS BB '26","Halloween Mega Camp"] },
+    { name:"Jordan Lee",     location:"London",         job:"Yoga Instructor",     bio:"Sunrise paddleboard sessions are my happy place. Always keen to meet fellow adventurers who appreciate both the mountain and the ocean.", activities:["Paddleboarding","Yoga","Swimming"],      skills:["Yoga instruction"],                 photo:"", contact:"@jordanleeyoga",       attending:["TAS Weekend by the Water"] },
+    { name:"Alex Chen",      location:"Leeds",          job:"Electrician",         bio:"Rock climbing on weekends, fixing wiring during the week. If your lights are flickering or your RCD keeps tripping, I'm your person.",   activities:["Rock Climbing","Hiking","Bouldering"],   skills:["Electrical","Solar install"],        photo:"", contact:"alex@email.com",        attending:["TAS BB '26"] },
+    { name:"Taylor Morris",  location:"Bristol",        job:"Marine Biologist",    bio:"Obsessed with the ocean in every form — diving, sailing, paddling. I also do freelance garden landscaping to fund my next trip.",        activities:["Diving","Sailing","Paddleboarding"],     skills:["Landscaping","Garden design"],       photo:"", contact:"@taylormorris_ocean",  attending:[] },
+    { name:"Casey Williams", location:"Lake District",  job:"Personal Trainer",    bio:"If there's a trail, I want to run it. Perfectly placed for long weekend adventures in the Lakes. Also do home gym setups.",             activities:["Trail Running","Hiking","Cycling"],      skills:["Personal training","Home gym setup"],photo:"", contact:"@casey_trains",        attending:["TAS BB '26","TAS Weekend by the Water"] },
+    { name:"Morgan Blake",   location:"Brighton",       job:"Plumber",             bio:"Surf before work, tools after. Passionate about getting outside every chance — and keeping everyone's pipes running when I'm not.",      activities:["Surfing","Camping","Fishing"],           skills:["Plumbing","Bathroom renos"],         photo:"", contact:"@morganblake",         attending:["Halloween Mega Camp"] },
   ];
 
   /* ── Filters ── */
@@ -516,6 +522,9 @@
 
   function cardHTML(m) {
     const tags = m.activities.slice(0,3).map(t=>`<span class="tag">⛰️ ${t}</span>`).join('');
+    const attendingTags = m.attending && m.attending.length
+      ? `<div class="tags attending-tags">${m.attending.slice(0,2).map(e=>`<span class="tag tag-event">🎟️ ${e}</span>`).join('')}</div>`
+      : '';
     const connectBtn = isMember
       ? `<button class="btn btn-copper btn-sm">Connect</button>`
       : `<button class="btn btn-sage btn-sm" onclick="event.stopPropagation();openLogin()">🔒 Members only</button>`;
@@ -531,6 +540,7 @@
           <div class="card-job">${m.job}</div>
           <div class="card-bio">${m.bio||'No bio yet.'}</div>
           <div class="tags">${tags}</div>
+          ${attendingTags}
         </div>
         <div class="card-footer">
           <button class="btn btn-sage btn-sm">View Profile</button>
@@ -560,6 +570,12 @@
       document.getElementById('modalSkills').innerHTML = m.skills.map(s=>`<span class="tag">🔧 ${s}</span>`).join('');
       skillsSec.style.display = '';
     } else { skillsSec.style.display = 'none'; }
+
+    const attendingSec = document.getElementById('modalAttendingSection');
+    if (m.attending && m.attending.length) {
+      document.getElementById('modalAttending').innerHTML = m.attending.map(e=>`<span class="tag tag-event">🎟️ ${e}</span>`).join('');
+      attendingSec.style.display = '';
+    } else { attendingSec.style.display = 'none'; }
     const contactArea = document.getElementById('modalContactArea');
     if (isMember && m.contact) {
       const isEmail = m.contact.includes('@') && m.contact.includes('.');
