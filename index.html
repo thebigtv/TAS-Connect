@@ -8,358 +8,172 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --forest:  #1a2e1e;
-      --moss:    #3d5c3a;
-      --sage:    #7ea87a;
-      --cream:   #f5f0e8;
-      --sand:    #e8dfc8;
-      --copper:  #c47c3a;
-      --ember:   #e8622a;
-      --white:   #fdfaf5;
-      --text:    #1a2e1e;
-      --muted:   #6b7b68;
-      --radius:  14px;
-      --shadow:  0 4px 24px rgba(26,46,30,.10);
+      --forest: #1a2e1e;
+      --moss:   #3d5c3a;
+      --sage:   #7ea87a;
+      --cream:  #f5f0e8;
+      --sand:   #e8dfc8;
+      --copper: #c47c3a;
+      --ember:  #e8622a;
+      --white:  #fdfaf5;
+      --text:   #1a2e1e;
+      --muted:  #6b7b68;
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(26,46,30,.10);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      min-height: 100vh;
-    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
 
-    /* ── AGE GATE ─────────────────────────────────────────────── */
+    /* ── AGE GATE ─────────────────────────────────────────────────── */
     #ageGate {
-      position: fixed;
-      inset: 0;
-      background: var(--forest);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
+      position: fixed; inset: 0; background: var(--forest); z-index: 9999;
+      display: flex; align-items: center; justify-content: center; padding: 2rem;
     }
-
     .age-gate-box {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 20px;
-      padding: 3rem 2.5rem;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px; padding: 3rem 2.5rem; max-width: 420px; width: 100%; text-align: center;
     }
-
-    .age-gate-box .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: var(--cream);
-      margin-bottom: .3rem;
-    }
+    .age-gate-box .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--cream); margin-bottom: .3rem; }
     .age-gate-box .logo span { color: var(--copper); }
-
-    .age-gate-box .tagline {
-      font-size: .8rem;
-      color: rgba(245,240,232,.5);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-    }
-
-    .age-gate-box h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: var(--cream);
-      margin-bottom: .75rem;
-    }
-
-    .age-gate-box p {
-      font-size: .85rem;
-      color: rgba(245,240,232,.6);
-      line-height: 1.65;
-      margin-bottom: 2rem;
-    }
+    .age-gate-box .tagline { font-size: .8rem; color: rgba(245,240,232,.5); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2rem; }
+    .age-gate-box h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--cream); margin-bottom: .75rem; }
+    .age-gate-box p { font-size: .85rem; color: rgba(245,240,232,.6); line-height: 1.65; margin-bottom: 2rem; }
     .age-gate-box p strong { color: rgba(245,240,232,.85); }
-
     .age-gate-actions { display: flex; gap: .75rem; flex-direction: column; }
-
-    .btn-enter {
-      background: var(--copper);
-      color: white;
-      border: none;
-      padding: .9rem 1.5rem;
-      border-radius: 10px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background .18s;
-    }
+    .btn-enter { background: var(--copper); color: white; border: none; padding: .9rem 1.5rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background .18s; }
     .btn-enter:hover { background: var(--ember); }
-
-    .btn-leave {
-      background: transparent;
-      color: rgba(245,240,232,.45);
-      border: none;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .85rem;
-      cursor: pointer;
-      padding: .5rem;
-    }
+    .btn-leave { background: transparent; color: rgba(245,240,232,.45); border: none; font-family: 'DM Sans', sans-serif; font-size: .85rem; cursor: pointer; padding: .5rem; }
     .btn-leave:hover { color: rgba(245,240,232,.7); }
+    .age-disclaimer { margin-top: 1.5rem; font-size: .72rem; color: rgba(245,240,232,.3); line-height: 1.5; }
 
-    .age-disclaimer {
-      margin-top: 1.5rem;
-      font-size: .72rem;
-      color: rgba(245,240,232,.3);
-      line-height: 1.5;
-    }
-
-    /* ── MEMBER LOGIN MODAL ───────────────────────────────────── */
-    #loginModal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(10,20,10,.7);
-      backdrop-filter: blur(6px);
-      z-index: 500;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
+    /* ── MEMBER LOGIN MODAL ───────────────────────────────────────── */
+    #loginModal { display: none; position: fixed; inset: 0; background: rgba(10,20,10,.7); backdrop-filter: blur(6px); z-index: 500; align-items: center; justify-content: center; padding: 1rem; }
     #loginModal.open { display: flex; }
-
-    .login-box {
-      background: var(--white);
-      border-radius: 18px;
-      padding: 2.5rem;
-      max-width: 380px;
-      width: 100%;
-      box-shadow: 0 24px 80px rgba(0,0,0,.3);
-      animation: slideUp .25s ease;
-      text-align: center;
-    }
-
-    .login-box .lock-icon {
-      width: 52px; height: 52px;
-      background: rgba(196,124,58,.12);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      margin: 0 auto 1.25rem;
-    }
-
-    .login-box h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: var(--forest);
-      margin-bottom: .4rem;
-    }
-
-    .login-box p {
-      font-size: .83rem;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      line-height: 1.55;
-    }
-
-    .login-box input {
-      width: 100%;
-      padding: .75rem 1rem;
-      border: 1.5px solid var(--sand);
-      border-radius: 9px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .95rem;
-      background: var(--cream);
-      color: var(--text);
-      margin-bottom: .75rem;
-      text-align: center;
-      letter-spacing: .1em;
-    }
+    .login-box { background: var(--white); border-radius: 18px; padding: 2.5rem; max-width: 380px; width: 100%; box-shadow: 0 24px 80px rgba(0,0,0,.3); animation: slideUp .25s ease; text-align: center; }
+    .login-box .lock-icon { width: 52px; height: 52px; background: rgba(196,124,58,.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 1.25rem; }
+    .login-box h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--forest); margin-bottom: .4rem; }
+    .login-box p { font-size: .83rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.55; }
+    .login-box input { width: 100%; padding: .75rem 1rem; border: 1.5px solid var(--sand); border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: .95rem; background: var(--cream); color: var(--text); margin-bottom: .75rem; text-align: center; letter-spacing: .1em; }
     .login-box input:focus { outline: none; border-color: var(--sage); }
-
     .login-error { font-size: .8rem; color: var(--ember); margin-bottom: .75rem; display: none; }
-
     .login-actions { display: flex; flex-direction: column; gap: .6rem; }
-
-    .btn-login {
-      background: var(--forest); color: white; border: none;
-      padding: .75rem 1.5rem; border-radius: 9px;
-      font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500;
-      cursor: pointer; transition: background .18s;
-    }
+    .btn-login { background: var(--forest); color: white; border: none; padding: .75rem 1.5rem; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500; cursor: pointer; transition: background .18s; }
     .btn-login:hover { background: var(--moss); }
-
-    .btn-cancel-login {
-      background: transparent; border: none; color: var(--muted);
-      font-family: 'DM Sans', sans-serif; font-size: .85rem;
-      cursor: pointer; padding: .4rem;
-    }
-
-    .login-join-prompt {
-      margin-top: 1.25rem; padding-top: 1.25rem;
-      border-top: 1px solid var(--sand);
-      font-size: .8rem; color: var(--muted);
-    }
+    .btn-cancel-login { background: transparent; border: none; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: .85rem; cursor: pointer; padding: .4rem; }
+    .login-join-prompt { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--sand); font-size: .8rem; color: var(--muted); }
     .login-join-prompt a { color: var(--copper); text-decoration: none; font-weight: 500; }
 
-    /* ── NAV ──────────────────────────────────────────────────── */
-    nav {
-      background: var(--forest);
-      padding: 0 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 20px rgba(0,0,0,.3);
-    }
-
+    /* ── NAV ──────────────────────────────────────────────────────── */
+    nav { background: var(--forest); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,.3); }
     .nav-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
     .nav-logo .leaf { font-size: 1.5rem; }
     .nav-logo .brand { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); letter-spacing: .02em; }
     .nav-logo .brand span { color: var(--copper); }
     nav .nav-actions { display: flex; gap: .75rem; align-items: center; }
 
-    .btn {
-      display: inline-flex; align-items: center; gap: .4rem;
-      padding: .5rem 1.2rem; border-radius: 8px;
-      font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 500;
-      cursor: pointer; border: none; transition: all .18s ease; text-decoration: none;
-    }
+    .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem 1.2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 500; cursor: pointer; border: none; transition: all .18s ease; text-decoration: none; }
     .btn-outline { background: transparent; border: 1.5px solid rgba(245,240,232,.35); color: var(--cream); }
     .btn-outline:hover { background: rgba(245,240,232,.1); }
     .btn-copper { background: var(--copper); color: white; }
     .btn-copper:hover { background: var(--ember); transform: translateY(-1px); }
 
-    .member-badge {
-      display: flex; align-items: center; gap: .5rem;
-      background: rgba(126,168,122,.2); border: 1px solid rgba(126,168,122,.4);
-      color: #a8d4a4; font-size: .8rem; padding: .35rem .9rem; border-radius: 999px;
-    }
-    .member-badge .dot {
-      width: 7px; height: 7px; background: #6dbb68; border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
+    .member-badge { display: flex; align-items: center; gap: .5rem; background: rgba(126,168,122,.2); border: 1px solid rgba(126,168,122,.4); color: #a8d4a4; font-size: .8rem; padding: .35rem .9rem; border-radius: 999px; }
+    .member-badge .dot { width: 7px; height: 7px; background: #6dbb68; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
 
-    /* ── HERO ─────────────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(155deg, var(--forest) 0%, var(--moss) 55%, #2d4a28 100%);
-      padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(196,124,58,.25); border: 1px solid rgba(196,124,58,.5);
-      color: #f0b878; font-size: .75rem; font-weight: 500;
-      letter-spacing: .12em; text-transform: uppercase;
-      padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1.5rem;
-    }
+    /* ── HERO ─────────────────────────────────────────────────────── */
+    .hero { background: linear-gradient(155deg, var(--forest) 0%, var(--moss) 55%, #2d4a28 100%); padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .hero-badge { display: inline-block; background: rgba(196,124,58,.25); border: 1px solid rgba(196,124,58,.5); color: #f0b878; font-size: .75rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1.5rem; }
     .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 6vw, 4rem); color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
     .hero h1 em { font-style: italic; color: #f0b878; }
     .hero p { font-size: 1.1rem; color: rgba(245,240,232,.75); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.65; font-weight: 300; }
     .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .btn-lg { padding: .75rem 1.8rem; font-size: 1rem; }
 
-    /* ── STATS ────────────────────────────────────────────────── */
+    /* ── STATS ────────────────────────────────────────────────────── */
     .stats-bar { background: var(--white); border-bottom: 1px solid var(--sand); display: flex; justify-content: center; }
     .stat { padding: 1.1rem 2.5rem; text-align: center; border-right: 1px solid var(--sand); }
     .stat:last-child { border-right: none; }
     .stat-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--forest); display: block; }
     .stat-label { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 500; }
 
-    /* ── MEMBER CTA BANNER ────────────────────────────────────── */
-    .member-cta {
-      background: linear-gradient(135deg, var(--forest), var(--moss));
-      padding: 1.25rem 2rem;
-      display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
-    }
+    /* ── MEMBER CTA ───────────────────────────────────────────────── */
+    .member-cta { background: linear-gradient(135deg, var(--forest), var(--moss)); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
     .member-cta p { color: rgba(245,240,232,.8); font-size: .9rem; }
     .member-cta p strong { color: var(--cream); }
 
-    /* ── SEARCH ───────────────────────────────────────────────── */
-    .search-bar {
-      background: var(--white); border-bottom: 1px solid var(--sand);
-      padding: 1.25rem 2rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;
-      position: sticky; top: 64px; z-index: 90;
-    }
+    /* ── SEARCH ───────────────────────────────────────────────────── */
+    .search-bar { background: var(--white); border-bottom: 1px solid var(--sand); padding: 1.25rem 2rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; position: sticky; top: 64px; z-index: 90; }
     .search-wrap { position: relative; flex: 1; min-width: 200px; }
     .search-wrap .icon { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-    .search-wrap input {
-      width: 100%; padding: .65rem 1rem .65rem 2.5rem;
-      border: 1.5px solid var(--sand); border-radius: 8px;
-      font-family: 'DM Sans', sans-serif; font-size: .9rem;
-      background: var(--cream); color: var(--text); transition: border-color .15s;
-    }
+    .search-wrap input { width: 100%; padding: .65rem 1rem .65rem 2.5rem; border: 1.5px solid var(--sand); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .9rem; background: var(--cream); color: var(--text); transition: border-color .15s; }
     .search-wrap input:focus { outline: none; border-color: var(--sage); }
     select { padding: .65rem 1rem; border: 1.5px solid var(--sand); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .9rem; background: var(--cream); color: var(--text); cursor: pointer; }
     select:focus { outline: none; border-color: var(--sage); }
 
-    /* ── GRID ─────────────────────────────────────────────────── */
+    /* ── MEMBER GRID ──────────────────────────────────────────────── */
     .grid-wrap { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
     .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; }
     .section-head h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--forest); }
     .count-tag { font-size: .8rem; color: var(--muted); background: var(--sand); padding: .25rem .7rem; border-radius: 999px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 
-    /* ── CARD ─────────────────────────────────────────────────── */
-    .card {
-      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
-      overflow: hidden; transition: transform .2s ease, box-shadow .2s ease;
-      border: 1px solid rgba(0,0,0,.05); display: flex; flex-direction: column; cursor: pointer;
-    }
+    /* ── PROFILE CARD ─────────────────────────────────────────────── */
+    .card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: transform .2s ease, box-shadow .2s ease; border: 1px solid rgba(0,0,0,.05); display: flex; flex-direction: column; cursor: pointer; }
     .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,46,30,.16); }
-
-    .card-header { position: relative; height: 130px; background: linear-gradient(135deg, var(--moss), var(--forest)); overflow: hidden; }
-    .card-header-pattern { position: absolute; inset: 0; opacity: .15; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.3) 10px, rgba(255,255,255,.3) 11px); }
+    .card-header { position: relative; height: 130px; background: linear-gradient(135deg, var(--moss), var(--forest)); overflow: visible; }
+    .card-header-pattern { position: absolute; inset: 0; opacity: .15; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.3) 10px, rgba(255,255,255,.3) 11px); border-radius: var(--radius) var(--radius) 0 0; }
     .location-badge { position: absolute; top: .8rem; right: .8rem; background: rgba(255,255,255,.15); backdrop-filter: blur(6px); color: white; font-size: .7rem; font-weight: 500; padding: .25rem .65rem; border-radius: 999px; }
 
+    /* ── AVATAR 130×130 ── */
     .card-avatar {
-      position: absolute; bottom: -40px; left: 1.25rem;
-      width: 130px; height: 130px; border-radius: 50%; border: 3px solid white;
+      position: absolute; bottom: -65px; left: 1.25rem;
+      width: 130px; height: 130px; border-radius: 50%; border: 4px solid white;
       background: var(--sand); display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--moss);
-      box-shadow: 0 4px 12px rgba(0,0,0,.15); overflow: hidden;
+      font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--moss);
+      box-shadow: 0 4px 16px rgba(0,0,0,.18); overflow: hidden; z-index: 2;
     }
     .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-    .card-body { padding: 3rem 1.25rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .card-body { padding: 5rem 1.25rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
     .card-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--forest); margin-bottom: .15rem; }
     .card-job { font-size: .8rem; color: var(--copper); font-weight: 500; margin-bottom: .6rem; }
     .card-bio { font-size: .83rem; color: var(--muted); line-height: 1.55; flex: 1; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
     .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
     .tag { background: var(--cream); border: 1px solid var(--sand); color: var(--moss); font-size: .7rem; font-weight: 500; padding: .2rem .6rem; border-radius: 999px; }
-
     .card-footer { border-top: 1px solid var(--sand); padding: .9rem 1.25rem; display: flex; gap: .6rem; }
     .btn-sm { padding: .4rem .9rem; font-size: .8rem; border-radius: 7px; flex: 1; justify-content: center; }
     .btn-sage { background: rgba(126,168,122,.15); color: var(--moss); border: 1px solid rgba(126,168,122,.3); }
     .btn-sage:hover { background: rgba(126,168,122,.28); }
 
-    /* ── EMPTY ────────────────────────────────────────────────── */
+    /* ── EMPTY ────────────────────────────────────────────────────── */
     .empty { text-align: center; padding: 4rem 2rem; color: var(--muted); grid-column: 1/-1; }
     .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
     .empty h3 { font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: .5rem; }
 
-    /* ── PROFILE MODAL ────────────────────────────────────────── */
+    /* ── PROFILE MODAL ────────────────────────────────────────────── */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,20,10,.6); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
     .modal-overlay.open { display: flex; }
     .modal { background: var(--white); border-radius: 18px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,.3); animation: slideUp .25s ease; }
-
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-    .modal-hero { height: 160px; background: linear-gradient(135deg, var(--moss), var(--forest)); position: relative; border-radius: 18px 18px 0 0; overflow: hidden; }
-    .modal-hero-pattern { position: absolute; inset: 0; opacity: .12; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.3) 10px, rgba(255,255,255,.3) 11px); }
-    .modal-close { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    .modal-hero { height: 160px; background: linear-gradient(135deg, var(--moss), var(--forest)); position: relative; border-radius: 18px 18px 0 0; overflow: visible; }
+    .modal-hero-pattern { position: absolute; inset: 0; opacity: .12; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.3) 10px, rgba(255,255,255,.3) 11px); border-radius: 18px 18px 0 0; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: background .15s; z-index: 3; }
     .modal-close:hover { background: rgba(255,255,255,.35); }
-    .modal-avatar { position: absolute; bottom: 04px; left: 1.5rem; width: 150px; height: 130px; border-radius: 50%; border: 4px solid white; background: var(--sand); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--moss); overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
+
+    /* ── MODAL AVATAR 110×110 positive offset ── */
+    .modal-avatar {
+      position: absolute; bottom: -55px; left: 1.5rem;
+      width: 110px; height: 110px; border-radius: 50%; border: 4px solid white;
+      background: var(--sand); display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--moss);
+      overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,.18); z-index: 2;
+    }
     .modal-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    .modal-body { padding: 3.5rem 1.5rem 1.5rem; }
+    .modal-body { padding: 4rem 1.5rem 1.5rem; }
     .modal-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--forest); }
     .modal-job { color: var(--copper); font-size: .85rem; font-weight: 500; margin-bottom: .3rem; }
     .modal-location { font-size: .82rem; color: var(--muted); display: flex; align-items: center; gap: .3rem; margin-bottom: 1.2rem; }
@@ -367,13 +181,41 @@
     .modal-bio { font-size: .9rem; color: var(--text); line-height: 1.7; }
     .modal-actions { display: flex; gap: .75rem; margin-top: 1.5rem; flex-wrap: wrap; }
     .modal-actions .btn { flex: 1; justify-content: center; }
-
     .modal-locked-contact { margin-top: 1.5rem; background: var(--cream); border: 1.5px dashed var(--sand); border-radius: 12px; padding: 1.25rem; text-align: center; }
     .modal-locked-contact .lock { font-size: 1.5rem; margin-bottom: .5rem; }
     .modal-locked-contact p { font-size: .83rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
     .modal-locked-contact p strong { color: var(--forest); }
 
-    /* ── FOOTER ───────────────────────────────────────────────── */
+    /* ── EVENTS SECTION ───────────────────────────────────────────── */
+    .events-wrap { background: var(--white); border-top: 1px solid var(--sand); padding: 3rem 2rem 4rem; }
+    .events-inner { max-width: 1280px; margin: 0 auto; }
+    .events-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .events-header h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--forest); }
+    .events-header p { font-size: .85rem; color: var(--muted); margin-top: .3rem; }
+    .btn-more { display: inline-flex; align-items: center; gap: .4rem; background: transparent; border: 1.5px solid var(--sand); color: var(--forest); padding: .5rem 1.2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all .18s; white-space: nowrap; }
+    .btn-more:hover { border-color: var(--moss); background: var(--cream); }
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .event-card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,.05); overflow: hidden; transition: transform .2s ease, box-shadow .2s ease; display: flex; flex-direction: column; }
+    .event-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,46,30,.16); }
+    .event-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .event-img-placeholder { width: 100%; height: 200px; background: linear-gradient(135deg, var(--moss), var(--forest)); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .event-body { padding: 1.25rem; flex: 1; }
+    .event-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--forest); margin-bottom: .6rem; line-height: 1.3; }
+    .event-meta { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .75rem; }
+    .event-meta-row { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: var(--muted); }
+    .event-desc { font-size: .82rem; color: var(--muted); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .event-footer { border-top: 1px solid var(--sand); padding: .9rem 1.25rem; display: flex; gap: .6rem; align-items: center; }
+    .btn-event { display: inline-flex; align-items: center; justify-content: center; padding: .4rem .9rem; border-radius: 7px; font-size: .8rem; font-weight: 500; text-decoration: none; cursor: pointer; border: none; transition: all .15s; font-family: 'DM Sans', sans-serif; }
+    .btn-event-primary { background: var(--forest); color: white; flex: 1; }
+    .btn-event-primary:hover { background: var(--moss); }
+    .btn-event-secondary { background: var(--cream); color: var(--forest); border: 1px solid var(--sand); }
+    .btn-event-secondary:hover { background: var(--sand); }
+    .btn-event-disabled { background: var(--sand); color: var(--muted); cursor: not-allowed; flex: 1; }
+    .events-loading { text-align: center; padding: 3rem; color: var(--muted); grid-column: 1/-1; font-size: .9rem; }
+    .events-note { margin-top: 1.5rem; text-align: center; font-size: .75rem; color: var(--muted); }
+    .events-note a { color: var(--copper); }
+
+    /* ── FOOTER ───────────────────────────────────────────────────── */
     footer { background: var(--forest); color: rgba(245,240,232,.6); text-align: center; padding: 2rem; font-size: .82rem; line-height: 1.8; }
     footer strong { color: var(--cream); }
     footer a { color: var(--copper); text-decoration: none; }
@@ -381,12 +223,13 @@
     @media (max-width: 600px) {
       .stats-bar { display: none; }
       .member-cta { flex-direction: column; text-align: center; gap: .75rem; }
+      .nav-logo .brand { font-size: 1.1rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── AGE GATE ──────────────────────────────────────────────────── -->
+<!-- AGE GATE -->
 <div id="ageGate">
   <div class="age-gate-box">
     <div class="logo">TAS <span>Connect</span></div>
@@ -401,7 +244,7 @@
   </div>
 </div>
 
-<!-- ── MEMBER LOGIN MODAL ────────────────────────────────────────── -->
+<!-- MEMBER LOGIN MODAL -->
 <div id="loginModal">
   <div class="login-box">
     <div class="lock-icon">🔓</div>
@@ -417,7 +260,7 @@
   </div>
 </div>
 
-<!-- ── NAV ───────────────────────────────────────────────────────── -->
+<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
     <span class="leaf">🌿</span>
@@ -430,31 +273,31 @@
   </div>
 </nav>
 
-<!-- ── HERO ──────────────────────────────────────────────────────── -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-badge">🏕️ Adventure Singles · 80,000+ Members</div>
-  <h1>Find your <em>adventure</em><br>partner in crime</h1>
-  <p>Real people. Real adventures. Browse our community of solo adventurers — hikers, paddlers, climbers, and a whole lot more. Create a profile and connect.</p>
+  <h1>Adventure awaits.<br><em>Community connects.</em></h1>
+  <p>Real people. Real adventures. Browse our community of solo adventurers — hikers, paddlers, climbers, and a whole lot more.</p>
   <div class="hero-actions">
     <a href="#members" class="btn btn-copper btn-lg">Browse Members</a>
     <a href="#" class="btn btn-outline btn-lg" id="heroJoinBtn">Create My Profile</a>
   </div>
 </section>
 
-<!-- ── STATS ──────────────────────────────────────────────────────── -->
+<!-- STATS -->
 <div class="stats-bar">
   <div class="stat"><span class="stat-num" id="statMembers">—</span><span class="stat-label">Profiles</span></div>
   <div class="stat"><span class="stat-num" id="statLocations">—</span><span class="stat-label">Locations</span></div>
   <div class="stat"><span class="stat-num" id="statActivities">—</span><span class="stat-label">Activities</span></div>
 </div>
 
-<!-- ── MEMBER CTA ─────────────────────────────────────────────────── -->
+<!-- MEMBER CTA -->
 <div class="member-cta" id="memberCta">
   <p>👋 <strong>See someone you like?</strong> Log in as a member to unlock contact details and connect directly.</p>
   <button class="btn btn-copper" onclick="openLogin()">Member Login</button>
 </div>
 
-<!-- ── SEARCH ─────────────────────────────────────────────────────── -->
+<!-- SEARCH -->
 <div class="search-bar">
   <div class="search-wrap">
     <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -464,7 +307,7 @@
   <select id="activityFilter"><option value="">All Activities</option></select>
 </div>
 
-<!-- ── GRID ──────────────────────────────────────────────────────── -->
+<!-- MEMBER GRID -->
 <div class="grid-wrap" id="members">
   <div class="section-head">
     <h2>Community Members</h2>
@@ -473,7 +316,27 @@
   <div class="grid" id="memberGrid"></div>
 </div>
 
-<!-- ── PROFILE MODAL ──────────────────────────────────────────────── -->
+<!-- EVENTS -->
+<div class="events-wrap">
+  <div class="events-inner">
+    <div class="events-header">
+      <div>
+        <h2>Upcoming Events</h2>
+        <p>Adventures happening across the UK — book your spot and come meet the community.</p>
+      </div>
+      <a href="https://theadventuresingles.co.uk" target="_blank" class="btn-more">View all events →</a>
+    </div>
+    <div class="events-grid" id="eventsGrid">
+      <div class="events-loading">Loading events…</div>
+    </div>
+    <div class="events-note">
+      Events by <a href="https://theadventuresingles.co.uk" target="_blank">The Adventure Singles</a> ·
+      Tickets via <a href="https://www.tickettailor.com" target="_blank">TicketTailor</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-hero">
@@ -487,7 +350,7 @@
       <div class="modal-location" id="modalLocation"></div>
       <div class="modal-section-label">About</div>
       <div class="modal-bio" id="modalBio"></div>
-      <div class="modal-section-label">Activities & Interests</div>
+      <div class="modal-section-label">Activities &amp; Interests</div>
       <div class="tags" id="modalTags"></div>
       <div id="modalSkillsSection">
         <div class="modal-section-label">Skills on offer</div>
@@ -501,48 +364,44 @@
   </div>
 </div>
 
-<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<!-- FOOTER -->
 <footer>
   <strong>TAS Connect</strong> · Adventure Singles Community<br>
   <a href="#" id="footerJoinLink">Create your profile</a> &nbsp;·&nbsp;
   <a href="#" id="footerLoginLink">Member login</a> &nbsp;·&nbsp;
+  <a href="https://theadventuresingles.co.uk" target="_blank">Main site</a><br>
   Adults only · 18+ · Members agree to community guidelines
 </footer>
 
 <script src="config.js"></script>
 <script>
-  let allMembers = [];
-  let filtered   = [];
-  let isMember   = false;
+  /* ── State ── */
+  let allMembers = [], filtered = [], isMember = false;
 
   /* ── Age Gate ── */
   function enterSite() {
-    sessionStorage.setItem('ageVerified', '1');
+    sessionStorage.setItem('ageVerified','1');
     document.getElementById('ageGate').style.display = 'none';
   }
-  if (sessionStorage.getItem('ageVerified')) {
-    document.getElementById('ageGate').style.display = 'none';
-  }
+  if (sessionStorage.getItem('ageVerified')) document.getElementById('ageGate').style.display = 'none';
 
-  /* ── Member Login ── */
+  /* ── Login ── */
   function openLogin() {
     document.getElementById('loginModal').classList.add('open');
     setTimeout(() => document.getElementById('passwordInput').focus(), 100);
     document.body.style.overflow = 'hidden';
   }
-
   function closeLogin() {
     document.getElementById('loginModal').classList.remove('open');
     document.body.style.overflow = '';
     document.getElementById('loginError').style.display = 'none';
     document.getElementById('passwordInput').value = '';
   }
-
   function attemptLogin() {
-    const pw      = document.getElementById('passwordInput').value;
+    const pw = document.getElementById('passwordInput').value;
     const correct = (typeof CONFIG !== 'undefined' && CONFIG.MEMBER_PASSWORD) ? CONFIG.MEMBER_PASSWORD : 'adventures';
     if (pw === correct) {
-      sessionStorage.setItem('tasMember', '1');
+      sessionStorage.setItem('tasMember','1');
       isMember = true;
       closeLogin();
       onMemberLogin();
@@ -552,8 +411,7 @@
       document.getElementById('passwordInput').focus();
     }
   }
-
-  document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
+  document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key==='Enter') attemptLogin(); });
 
   function onMemberLogin() {
     document.getElementById('navLoginBtn').style.display = 'none';
@@ -561,20 +419,17 @@
     document.getElementById('memberCta').style.display = 'none';
     render();
   }
-
-  if (sessionStorage.getItem('tasMember') === '1') { isMember = true; }
+  if (sessionStorage.getItem('tasMember')==='1') isMember = true;
 
   /* ── Boot ── */
   async function init() {
     if (isMember) onMemberLogin();
-
     if (typeof CONFIG !== 'undefined' && CONFIG.SHEET_URL && !CONFIG.SHEET_URL.includes('YOUR_SHEET_ID')) {
       try { allMembers = await fetchSheet(CONFIG.SHEET_URL); }
-      catch (e) { console.warn('Sheet load failed, using demo data', e); allMembers = DEMO_MEMBERS; }
+      catch(e) { console.warn('Sheet failed, using demo', e); allMembers = DEMO_MEMBERS; }
     } else {
       allMembers = DEMO_MEMBERS;
     }
-
     buildFilters();
     filtered = [...allMembers];
     render();
@@ -586,37 +441,35 @@
   async function fetchSheet(url) {
     const res  = await fetch(url);
     const text = await res.text();
-    const json = JSON.parse(text.replace(/^[^\(]+\(/, '').replace(/\);?$/, ''));
-    const rows = json.table.rows;
+    const json = JSON.parse(text.replace(/^[^\(]+\(/,'').replace(/\);?$/,''));
     const cols = json.table.cols.map(c => c.label.trim());
-
-    return rows.map(row => {
+    return json.table.rows.map(row => {
       const obj = {};
-      row.c.forEach((cell, i) => { obj[cols[i]] = cell ? (cell.v ?? '') : ''; });
+      row.c.forEach((cell,i) => { obj[cols[i]] = cell ? (cell.v ?? '') : ''; });
       return {
         name:       obj['Full Name'] || '—',
         location:   obj['Location / Suburb'] || '',
         job:        obj['Occupation'] || '',
         bio:        obj['About Me'] || '',
-        activities: (obj['Activities I love'] || '').split(',').map(s=>s.trim()).filter(Boolean),
-        skills:     (obj['Skills I can offer'] || '').split(',').map(s=>s.trim()).filter(Boolean),
+        activities: (obj['Activities I love']||'').split(',').map(s=>s.trim()).filter(Boolean),
+        skills:     (obj['Skills I can offer']||'').split(',').map(s=>s.trim()).filter(Boolean),
         photo:      obj['Profile photo URL'] || '',
         contact:    obj['Contact email or Instagram handle'] || '',
-        approved:   (obj['Approved'] || '').toString().toLowerCase(),
+        approved:   (obj['Approved']||'').toString().toLowerCase().trim(),
       };
     })
     .filter(m => m.name && m.name !== '—')
     .filter(m => ['yes','true','1',''].includes(m.approved));
   }
 
-  /* ── Demo data ── */
+  /* ── Demo Members ── */
   const DEMO_MEMBERS = [
-    { name:"Sam Rivera",     location:"Manly, NSW",            job:"Freelance Carpenter", bio:"Love being outdoors whether it's on the water or up a mountain. Can turn my hand to most home reno projects too — decks, fencing, framing, you name it.", activities:["Kayaking","Hiking","Camping"],           skills:["Carpentry","Decking","General repairs"],        photo:"", contact:"@sam_adventures" },
-    { name:"Jordan Lee",     location:"Bondi, NSW",            job:"Yoga Instructor",     bio:"Sunrise paddleboard sessions are my happy place. Always keen to meet fellow adventurers who appreciate both the mountain and the ocean.",                  activities:["Paddleboarding","Yoga","Swimming"],      skills:["Yoga instruction","Wellness coaching"],         photo:"", contact:"@jordanleeyoga" },
-    { name:"Alex Chen",      location:"North Shore, NSW",      job:"Electrician",         bio:"Rock climbing on weekends, fixing wiring during the week. If your lights are flickering or your RCD keeps tripping, I'm your person.",                    activities:["Rock Climbing","Hiking","Bouldering"],   skills:["Electrical","Solar install"],                   photo:"", contact:"alex@email.com" },
-    { name:"Taylor Morris",  location:"Cronulla, NSW",         job:"Marine Biologist",    bio:"Obsessed with the ocean in every form — diving, sailing, paddling. I also do freelance garden landscaping to fund my next trip.",                         activities:["Diving","Sailing","Paddleboarding"],     skills:["Landscaping","Garden design"],                  photo:"", contact:"@taylormorris_ocean" },
-    { name:"Casey Williams", location:"Blue Mountains, NSW",   job:"Personal Trainer",    bio:"If there's a trail, I want to run it. Based in the Mountains so I'm perfectly placed for long weekend adventures. Also do home gym setups.",              activities:["Trail Running","Hiking","Cycling"],      skills:["Personal training","Home gym setup"],           photo:"", contact:"@casey_trains" },
-    { name:"Morgan Blake",   location:"Northern Beaches, NSW", job:"Plumber",             bio:"Surf before work, tools after. Passionate about getting outside every chance I get — and keeping everyone's pipes running when I'm not.",                  activities:["Surfing","Camping","Fishing"],           skills:["Plumbing","Hot water systems","Bathroom renos"],photo:"", contact:"@morganblake" },
+    { name:"Sam Rivera",     location:"Manchester",     job:"Freelance Carpenter", bio:"Love being outdoors whether on the water or up a mountain. Can turn my hand to most home reno projects too — decks, fencing, framing.",  activities:["Kayaking","Hiking","Camping"],           skills:["Carpentry","Decking"],              photo:"", contact:"@sam_adventures" },
+    { name:"Jordan Lee",     location:"London",         job:"Yoga Instructor",     bio:"Sunrise paddleboard sessions are my happy place. Always keen to meet fellow adventurers who appreciate both the mountain and the ocean.", activities:["Paddleboarding","Yoga","Swimming"],      skills:["Yoga instruction"],                 photo:"", contact:"@jordanleeyoga" },
+    { name:"Alex Chen",      location:"Leeds",          job:"Electrician",         bio:"Rock climbing on weekends, fixing wiring during the week. If your lights are flickering or your RCD keeps tripping, I'm your person.",   activities:["Rock Climbing","Hiking","Bouldering"],   skills:["Electrical","Solar install"],        photo:"", contact:"alex@email.com" },
+    { name:"Taylor Morris",  location:"Bristol",        job:"Marine Biologist",    bio:"Obsessed with the ocean in every form — diving, sailing, paddling. I also do freelance garden landscaping to fund my next trip.",        activities:["Diving","Sailing","Paddleboarding"],     skills:["Landscaping","Garden design"],       photo:"", contact:"@taylormorris_ocean" },
+    { name:"Casey Williams", location:"Lake District",  job:"Personal Trainer",    bio:"If there's a trail, I want to run it. Perfectly placed for long weekend adventures in the Lakes. Also do home gym setups.",             activities:["Trail Running","Hiking","Cycling"],      skills:["Personal training","Home gym setup"],photo:"", contact:"@casey_trains" },
+    { name:"Morgan Blake",   location:"Brighton",       job:"Plumber",             bio:"Surf before work, tools after. Passionate about getting outside every chance — and keeping everyone's pipes running when I'm not.",      activities:["Surfing","Camping","Fishing"],           skills:["Plumbing","Bathroom renos"],         photo:"", contact:"@morganblake" },
   ];
 
   /* ── Filters ── */
@@ -628,7 +481,6 @@
     const actSel = document.getElementById('activityFilter');
     acts.forEach(a => { const o=document.createElement('option'); o.value=a; o.textContent=a; actSel.appendChild(o); });
   }
-
   function applyFilters() {
     const q   = document.getElementById('searchInput').value.toLowerCase();
     const loc = document.getElementById('locationFilter').value;
@@ -639,12 +491,11 @@
     });
     render();
   }
-
   document.getElementById('searchInput').addEventListener('input', applyFilters);
   document.getElementById('locationFilter').addEventListener('change', applyFilters);
   document.getElementById('activityFilter').addEventListener('change', applyFilters);
 
-  /* ── Render ── */
+  /* ── Render Members ── */
   function render() {
     const grid = document.getElementById('memberGrid');
     document.getElementById('countTag').textContent = `${filtered.length} member${filtered.length!==1?'s':''}`;
@@ -653,7 +504,7 @@
       return;
     }
     grid.innerHTML = filtered.map(m => cardHTML(m)).join('');
-    grid.querySelectorAll('.card').forEach((el,i) => { el.addEventListener('click', () => openModal(filtered[i])); });
+    grid.querySelectorAll('.card').forEach((el,i) => el.addEventListener('click', () => openModal(filtered[i])));
   }
 
   function initials(name) { return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
@@ -695,24 +546,20 @@
     document.getElementById('statActivities').textContent = new Set(allMembers.flatMap(m=>m.activities).filter(Boolean)).size;
   }
 
-  /* ── Modal ── */
+  /* ── Profile Modal ── */
   function openModal(m) {
     document.getElementById('modalName').textContent   = m.name;
     document.getElementById('modalJob').textContent    = m.job;
     document.getElementById('modalLocation').innerHTML = m.location ? `📍 ${m.location}` : '';
     document.getElementById('modalBio').textContent    = m.bio || 'No bio yet.';
-
     const av = document.getElementById('modalAvatar');
     av.innerHTML = m.photo ? `<img src="${m.photo}" alt="${m.name}" onerror="this.parentElement.textContent='${initials(m.name)}'" />` : initials(m.name);
-
     document.getElementById('modalTags').innerHTML = m.activities.map(t=>`<span class="tag">⛰️ ${t}</span>`).join('');
-
     const skillsSec = document.getElementById('modalSkillsSection');
     if (m.skills && m.skills.length) {
       document.getElementById('modalSkills').innerHTML = m.skills.map(s=>`<span class="tag">🔧 ${s}</span>`).join('');
       skillsSec.style.display = '';
     } else { skillsSec.style.display = 'none'; }
-
     const contactArea = document.getElementById('modalContactArea');
     if (isMember && m.contact) {
       const isEmail = m.contact.includes('@') && m.contact.includes('.');
@@ -720,35 +567,90 @@
       if (isEmail) {
         contactArea.innerHTML = `<a href="mailto:${m.contact}" class="btn btn-copper" style="margin-top:1rem;width:100%;justify-content:center;">✉️ Send Email</a>`;
       } else if (isInsta) {
-        const handle = m.contact.replace('@','');
-        contactArea.innerHTML = `<a href="https://instagram.com/${handle}" target="_blank" class="btn btn-copper" style="margin-top:1rem;width:100%;justify-content:center;">📸 View Instagram</a>`;
+        contactArea.innerHTML = `<a href="https://instagram.com/${m.contact.replace('@','')}" target="_blank" class="btn btn-copper" style="margin-top:1rem;width:100%;justify-content:center;">📸 View Instagram</a>`;
       } else {
         contactArea.innerHTML = `<div style="margin-top:1rem;font-size:.85rem;color:var(--muted);">Contact: ${m.contact}</div>`;
       }
     } else {
-      const firstName = m.name.split(' ')[0];
+      const fn = m.name.split(' ')[0];
       contactArea.innerHTML = `
         <div class="modal-locked-contact">
           <div class="lock">🔒</div>
-          <p><strong>Members can see contact details</strong><br>Log in with your member password to connect with ${firstName} directly.</p>
+          <p><strong>Members can see contact details</strong><br>Log in with your member password to connect with ${fn} directly.</p>
           <button class="btn btn-copper" style="width:100%;justify-content:center;" onclick="closeModal();openLogin()">Member Login</button>
         </div>`;
     }
-
     document.getElementById('modalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
   function closeModal() {
     document.getElementById('modalOverlay').classList.remove('open');
     document.body.style.overflow = '';
   }
-
   document.getElementById('modalClose').addEventListener('click', closeModal);
   document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target===document.getElementById('modalOverlay')) closeModal(); });
   document.getElementById('navLoginBtn').addEventListener('click', e => { e.preventDefault(); openLogin(); });
 
-  /* ── Links ── */
+  /* ── Events ── */
+  const DEMO_EVENTS = [
+    { title:"TAS BB '26 🎉",                           date:"31 Jul 2026, 16:00 – 2 Aug 12:00",   location:"Shay Gate, Colne",                   desc:"A huge TAS summer weekend with camping, music, socialising and full festival energy.",                             status:"available", ticketUrl:"https://theadventuresingles.co.uk", detailUrl:"https://theadventuresingles.co.uk", img:"" },
+    { title:"TAS Weekend by the Water – Fotheringhay", date:"10 Jul 2026, 16:00 – 12 Jul 17:00",  location:"Fotheringhay Castle Farm",            desc:"A relaxed summer weekend by the water with camping, social vibes and a great atmosphere.",                          status:"soon",      ticketUrl:"",                                   detailUrl:"https://theadventuresingles.co.uk", img:"" },
+    { title:"Halloween Mega Camp 👻",                  date:"30 October 2026",                    location:"West Mid Showground, Shrewsbury",     desc:"A huge Halloween camping event with indoor party spaces, riverside walks, and town access.",                        status:"soon",      ticketUrl:"",                                   detailUrl:"https://theadventuresingles.co.uk", img:"" },
+    { title:"SOLD OUT – Summer Solstice 2026",         date:"19 June 2026 (3 nights)",            location:"Into the Woods, Cumbria, CA10 1NP",  desc:"Climbing, hiking, paddleboarding, live music and pizzas, community-led activities.",                                status:"sold-out",  ticketUrl:"",                                   detailUrl:"https://theadventuresingles.co.uk", img:"" },
+  ];
+
+  async function loadEvents() {
+    const grid = document.getElementById('eventsGrid');
+    let events = DEMO_EVENTS;
+
+    if (typeof CONFIG !== 'undefined' && CONFIG.TICKETTAILOR_URL) {
+      try {
+        const res  = await fetch(CONFIG.TICKETTAILOR_URL);
+        const data = await res.json();
+        if (data.data && data.data.length) {
+          events = data.data.map(e => ({
+            title:     e.name,
+            date:      e.start ? new Date(e.start.unix*1000).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '',
+            location:  e.venue ? e.venue.name : '',
+            desc:      e.description ? e.description.replace(/<[^>]+>/g,'').slice(0,140) : '',
+            status:    e.sold_out ? 'sold-out' : 'available',
+            ticketUrl: e.url || 'https://theadventuresingles.co.uk',
+            detailUrl: e.url || 'https://theadventuresingles.co.uk',
+            img:       (e.images && e.images[0]) ? e.images[0].url : '',
+          }));
+        }
+      } catch(e) { console.warn('TicketTailor failed, using demo events'); }
+    }
+
+    grid.innerHTML = events.map(e => {
+      const img = e.img
+        ? `<img class="event-img" src="${e.img}" alt="${e.title}" onerror="this.outerHTML='<div class=event-img-placeholder>🏕️</div>'" />`
+        : `<div class="event-img-placeholder">🏕️</div>`;
+      const ticketBtn = e.status==='sold-out'
+        ? `<span class="btn-event btn-event-disabled">Sold Out</span>`
+        : e.status==='soon'
+          ? `<span class="btn-event btn-event-disabled">Tickets Soon</span>`
+          : `<a href="${e.ticketUrl}" target="_blank" class="btn-event btn-event-primary">Buy Tickets</a>`;
+      return `
+        <div class="event-card">
+          ${img}
+          <div class="event-body">
+            <div class="event-title">${e.title}</div>
+            <div class="event-meta">
+              <div class="event-meta-row">📅 ${e.date}</div>
+              ${e.location?`<div class="event-meta-row">📍 ${e.location}</div>`:''}
+            </div>
+            <div class="event-desc">${e.desc}</div>
+          </div>
+          <div class="event-footer">
+            <a href="${e.detailUrl}" target="_blank" class="btn-event btn-event-secondary">View Details</a>
+            ${ticketBtn}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  /* ── Wire Links ── */
   function wireLinks() {
     const formUrl = (typeof CONFIG!=='undefined' && CONFIG.FORM_URL && !CONFIG.FORM_URL.includes('YOUR_FORM')) ? CONFIG.FORM_URL : '#';
     ['heroJoinBtn','navJoinBtn','footerJoinLink','loginJoinLink'].forEach(id => {
@@ -759,6 +661,7 @@
   }
 
   init();
+  loadEvents();
 </script>
 </body>
 </html>
