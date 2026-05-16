@@ -9,9 +9,8 @@ const CONFIG = {
   // Your Google Sheet (member profiles) published as JSON
   SHEET_URL: "https://docs.google.com/spreadsheets/d/1bD2ZlJWzCn6cb8ZCjDUr1v0FdOlLGNVflSugMq1ZDYg/gviz/tq?tqx=out:json",
 
-  // Your Google Sheet Settings tab — same sheet ID, add &sheet=Settings
-  // Once you've created the Settings tab, uncomment and use this:
-  // SETTINGS_URL: "https://docs.google.com/spreadsheets/d/1bD2ZlJWzCn6cb8ZCjDUr1v0FdOlLGNVflSugMq1ZDYg/gviz/tq?tqx=out:json&sheet=Settings",
+  // Your Google Sheet Settings tab
+  SETTINGS_URL: "https://docs.google.com/spreadsheets/d/1bD2ZlJWzCn6cb8ZCjDUr1v0FdOlLGNVflSugMq1ZDYg/gviz/tq?tqx=out:json&sheet=Settings",
 
   // Your Google Form link
   FORM_URL: "https://docs.google.com/forms/d/1qH4WAe-Ufq4SA8nrNrQPuXtJn6NahDrKXN7-Ws4_2W8/preview",
