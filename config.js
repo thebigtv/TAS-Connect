@@ -21,7 +21,7 @@ const CONFIG = {
 
   // Password to access the admin panel at /admin
   // Change this to something only you know — never share this one!
-  ADMIN_PASSWORD: "tasadmin2024",
+  ADMIN_PASSWORD: "tasadmin2026",
 
   // Community name
   COMMUNITY_NAME: "Adventure Singles",
